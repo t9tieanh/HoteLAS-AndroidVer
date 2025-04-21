@@ -4,104 +4,103 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    >
+    android:padding="8dp">
 
     <ImageView
         android:id="@+id/hotelImageView"
-        android:layout_width="143dp"
-        android:layout_height="250dp"
+        android:layout_width="140dp"
+        android:layout_height="220dp"
         android:scaleType="centerCrop"
         android:src="@drawable/testhotel"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
     <TextView
-        android:id="@+id/hotelNameTextView"
-        android:layout_width="185dp"
+        android:id="@+id/addressText"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="14dp"
         android:text="Hilton Hotel"
         android:textColor="#000000"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/hotelImageView"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toEndOf="@id/hotelImageView"
+        app:layout_constraintTop_toTopOf="@id/hotelImageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="12dp" />
+
+    <TextView
+        android:id="@+id/regionNameTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Konyaalti"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/addressText"
+        app:layout_constraintTop_toBottomOf="@id/addressText" />
 
     <TextView
         android:id="@+id/reviewScoreTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="32dp"
         android:text="8.6 / 10"
         android:textColor="#000000"
         android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@+id/hotelImageView"
-        app:layout_constraintTop_toBottomOf="@+id/regionNameTextView" />
+        app:layout_constraintStart_toStartOf="@id/addressText"
+        app:layout_constraintTop_toBottomOf="@id/regionNameTextView" />
 
     <TextView
-        android:id="@+id/totalReviewsTextView"
+        android:id="@+id/originalPriceTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp"
-        android:text="(total 198)"
-        android:textColor="#000000"
-        android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@+id/reviewScoreTextView"
-        app:layout_constraintTop_toBottomOf="@+id/regionNameTextView" />
-
-
-    <TextView
-        android:id="@+id/regionNameTextView"
-        android:layout_width="184dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="50dp"
-        android:text="Konyaalti"
-        android:textColor="#000000"
-        android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@+id/hotelImageView"
-        app:layout_constraintTop_toTopOf="@+id/hotelNameTextView" />
+        android:text="80"
+        android:textColor="#888888"
+        android:textSize="14sp"
+        app:layout_constraintTop_toBottomOf="@id/reviewScoreTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="12dp" />
 
     <TextView
         android:id="@+id/priceInfoTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="56dp"
-        android:layout_marginBottom="5dp"
         android:text="50"
         android:textColor="#000000"
-        android:textSize="35sp"
+        android:textSize="28sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/priceInfo"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/originalPriceTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="12dp" />
 
     <TextView
         android:id="@+id/priceInfo"
-        android:layout_width="160dp"
-        android:layout_height="60dp"
-        android:layout_marginEnd="20dp"
-        android:text="Price for 1 days"
-        android:textColor="#000000"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <ImageButton
-        android:id="@+id/favoriteButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:background="@android:color/transparent"
-        android:minWidth="48dp"
-        android:minHeight="48dp"
-        android:src="@drawable/icon_favorite_border"
+        android:text="Price for 1 day"
+        android:textColor="#000000"
+        android:textSize="14sp"
+        app:layout_constraintTop_toBottomOf="@id/priceInfoTextView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/hotelImageView"
-        tools:ignore="SpeakableTextPresentCheck" />
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="12dp" />
 
+    <ImageButton
+        android:id="@+id/icon_rating"
+        android:layout_width="25dp"
+        android:layout_height="21dp"
+        android:layout_marginTop="32dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="Star rating"
+        android:scaleType="centerInside"
+        android:src="@drawable/icon_button_favorite"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.044"
+        app:layout_constraintStart_toEndOf="@+id/reviewScoreTextView"
+        app:layout_constraintTop_toBottomOf="@+id/regionNameTextView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

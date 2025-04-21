@@ -3,56 +3,52 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="#E8E8E8">
+    android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/hotelImageView"
         android:layout_width="143dp"
-        android:layout_height="250dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="16dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/testhotel"
+        android:src="@drawable/location"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.47" />
 
     <TextView
         android:id="@+id/addressText"
-        android:layout_width="wrap_content"
+        android:layout_width="185dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="14dp"
-        android:text="Hilton Hotel"
+        android:text="location"
         android:textColor="#000000"
-        android:textSize="24sp"
+        android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/hotelImageView"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- Address TextView -->
     <TextView
-        android:id="@+id/priceInfoTextView"
+        android:id="@+id/addressTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginBottom="5dp"
-        android:text="price for two night"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="10dp"
+        android:text="Việt Nam"
         android:textColor="#000000"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/hotelImageView" />
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@+id/hotelImageView"
+        app:layout_constraintTop_toBottomOf="@+id/addressText" />
 
-    <ImageButton
-        android:id="@+id/favoriteButton"
+    <Button
+        android:id="@+id/selectButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:background="@android:color/transparent"
-        android:minWidth="48dp"
-        android:minHeight="48dp"
-        android:src="@drawable/icon_button_favorite"
+        android:layout_marginEnd="4dp"
+        android:text="Select"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/hotelImageView"
-        tools:ignore="SpeakableTextPresentCheck" />
-
-
+        app:layout_constraintTop_toTopOf="@id/addressTextView" />
 </androidx.constraintlayout.widget.ConstraintLayout>

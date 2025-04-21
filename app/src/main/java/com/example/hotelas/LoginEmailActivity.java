@@ -45,7 +45,7 @@ public class LoginEmailActivity extends AppCompatActivity {
     private void isUserRegistered (String email) {
         AuthService authService = new AuthService();
 
-        authService.checkEmailExists(email ,new AuthService.CallBack() {
+        authService.checkEmailExists(email ,new AuthService.CallBack<Boolean>() {
             @Override
             public void onSuccess(ApiResponse<Boolean> result) {
                 if (result.getResult()) {

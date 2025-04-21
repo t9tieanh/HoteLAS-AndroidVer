@@ -4,7 +4,10 @@ import android.os.Bundle;
 import android.widget.Toast;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.hotelas.config.PrefManager;
 import com.example.hotelas.databinding.ActivityStartBinding;
+import com.example.hotelas.model.response.AuthenticationResponse;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.tasks.Task;
@@ -20,6 +23,14 @@ public class StartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityStartBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        PrefManager prefManager = new PrefManager(this);
+        AuthenticationResponse user = prefManager.getAuthResponse();
+        if (user != null) {
+            Intent intent = new Intent(StartActivity.this, MainActivity.class);
+            startActivity(intent);
+            return;
+        }
 
         binding.continueEmail.setOnClickListener(v -> {
             Intent intent = new Intent(StartActivity.this, LoginEmailActivity.class);

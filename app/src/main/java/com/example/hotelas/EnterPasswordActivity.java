@@ -1,10 +1,17 @@
 package com.example.hotelas;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.hotelas.config.PrefManager;
 import com.example.hotelas.databinding.ActivityEnterPasswordBinding;
-import com.google.firebase.auth.FirebaseAuth;
+import com.example.hotelas.model.request.AuthenticationRequest;
+import com.example.hotelas.model.response.ApiResponse;
+import com.example.hotelas.model.response.AuthenticationResponse;
+import com.example.hotelas.service.auth.AuthService;
 
 public class EnterPasswordActivity extends AppCompatActivity {
 
@@ -39,5 +46,34 @@ public class EnterPasswordActivity extends AppCompatActivity {
     }
 
     private void login(String email, String password) {
+        AuthService authService = new AuthService();
+        AuthenticationRequest request = AuthenticationRequest.builder()
+                .username(email)
+                .password(password)
+                .build();
+
+        authService.login(request ,new AuthService.CallBack<AuthenticationResponse>() {
+            @Override
+            public void onSuccess(ApiResponse<AuthenticationResponse> result) {
+                if (result.getResult() != null) {
+                    // Navigate to password entry
+                    PrefManager prefManager = new PrefManager(EnterPasswordActivity.this);
+                    prefManager.saveAuthResponse(result.getResult());
+
+                    // chuyen activity
+                    // transfer activity
+                    Intent intent = new Intent(EnterPasswordActivity.this, MainActivity.class);
+                    startActivity(intent);
+
+                    Toast.makeText(EnterPasswordActivity.this, "Đăng nhập thành công !", Toast.LENGTH_SHORT).show();
+                } else {
+                }
+            }
+
+            @Override
+            public void onFailure(String errorMessage) {
+                Toast.makeText(EnterPasswordActivity.this, errorMessage, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

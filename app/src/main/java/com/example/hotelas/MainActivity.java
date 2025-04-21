@@ -1,10 +1,13 @@
 package com.example.hotelas;
 
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import com.example.hotelas.config.PrefManager;
 import com.example.hotelas.databinding.ActivityMainBinding;
+import com.example.hotelas.model.response.AuthenticationResponse;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -13,6 +16,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+//        // Ẩn ActionBar (nếu đang dùng AppCompatActivity)
+//        if (getSupportActionBar() != null) {
+//            getSupportActionBar().hide();
+//        }
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -28,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
             } else if (item.getItemId() == R.id.favorites) {
                 // replaceFragment(new FavoritesFragment());
             } else if (item.getItemId() == R.id.search) {
-                // replaceFragment(new SearchFragment());
+                replaceFragment(new SearchFragment());
             } else if (item.getItemId() == R.id.reservations) {
                 // replaceFragment(new ReservationsFragment());
             }

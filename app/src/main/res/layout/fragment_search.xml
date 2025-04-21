@@ -1,7 +1,10 @@
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true"
+    xmlns:tools="http://schemas.android.com/tools">
+
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SearchFragment">
@@ -12,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="110dp"
         android:layout_marginEnd="16dp"
         android:drawableLeft="@drawable/icon_location"
         android:text="Place to go"
@@ -84,3 +87,4 @@
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

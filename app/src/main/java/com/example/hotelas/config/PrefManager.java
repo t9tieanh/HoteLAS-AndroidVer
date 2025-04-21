@@ -3,47 +3,43 @@ package com.example.hotelas.config;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-public class PrefManager {
-    private static final String PREF_NAME = "LoginDetails";
-    private static final String KEY_EMAIL = "Email";
-    private static final String KEY_FULL_NAME = "FullName";
-    private static final String KEY_PICTURE = "Picture";
-    private static final String KEY_LOGGED_IN = "IsLoggedIn";
+import com.example.hotelas.model.response.AuthenticationResponse;
+import com.google.gson.Gson;
 
-    private final SharedPreferences sharedPreferences;
-    private final SharedPreferences.Editor editor;
+public class PrefManager {
+    private static final String PREF_NAME = "my_app_prefs";
+    private static final String KEY_AUTH_RESPONSE = "auth_response";
+
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
+    private Gson gson;
 
     public PrefManager(Context context) {
-        this.sharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
-        this.editor = sharedPreferences.edit();
+        sharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+        gson = new Gson();
     }
 
-    public void saveLoginDetails(String fullName, String email, String picture) {
-        editor.putString(KEY_FULL_NAME, fullName);
-        editor.putString(KEY_EMAIL, email);
-        editor.putString(KEY_PICTURE, picture);
-        editor.putBoolean(KEY_LOGGED_IN, true);
+    public void saveAuthResponse(AuthenticationResponse authResponse) {
+        String json = gson.toJson(authResponse);
+        editor.putString(KEY_AUTH_RESPONSE, json);
         editor.apply();
     }
 
-    public String getEmail() {
-        return sharedPreferences.getString(KEY_EMAIL, "");
+    public AuthenticationResponse getAuthResponse() {
+        String json = sharedPreferences.getString(KEY_AUTH_RESPONSE, null);
+        if (json != null) {
+            return gson.fromJson(json, AuthenticationResponse.class);
+        }
+        return null;
     }
 
-    public String getFullName() {
-        return sharedPreferences.getString(KEY_FULL_NAME, "");
-    }
-
-    public String getPicture() {
-        return sharedPreferences.getString(KEY_PICTURE, "");
-    }
-
-    public boolean isUserLoggedIn() {
-        return sharedPreferences.getBoolean(KEY_LOGGED_IN, false);
-    }
-
-    public void logout() {
-        editor.clear();
+    public void clearAuthResponse() {
+        editor.remove(KEY_AUTH_RESPONSE);
         editor.apply();
+    }
+
+    public boolean isLoggedIn() {
+        return getAuthResponse() != null;
     }
 }
