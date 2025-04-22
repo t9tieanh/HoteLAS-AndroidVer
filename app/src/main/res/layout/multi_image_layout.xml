@@ -1,0 +1,43 @@
+<!-- res/layout/multi_image_layout.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:padding="8dp">
+
+    <!-- Ảnh chính bên trái -->
+    <ImageView
+        android:id="@+id/mainImageLeft"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:layout_weight="2"
+        android:scaleType="centerCrop"
+        android:layout_marginEnd="4dp" />
+
+    <!-- Hai ảnh bên phải -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_marginStart="4dp">
+
+        <ImageView
+            android:id="@+id/topRightImage"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:scaleType="centerCrop"
+            android:layout_marginBottom="4dp" />
+
+        <ImageView
+            android:id="@+id/bottomRightImage"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:scaleType="centerCrop"
+            android:layout_marginTop="4dp" />
+    </LinearLayout>
+</LinearLayout>

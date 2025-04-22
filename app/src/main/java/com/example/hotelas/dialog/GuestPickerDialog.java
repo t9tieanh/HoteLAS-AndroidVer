@@ -54,7 +54,6 @@ public class GuestPickerDialog extends BottomSheetDialogFragment {
         ImageButton childsPlusButton = view.findViewById(R.id.childsPlusButton);
         TextView childsCountText = view.findViewById(R.id.childsCountText);
 
-        ImageButton closeButton = view.findViewById(R.id.closeButton);
         MaterialButton confirmButton = view.findViewById(R.id.confirmButton);
 
         adultsCountText.setText(String.valueOf(adultsCount));
@@ -95,7 +94,7 @@ public class GuestPickerDialog extends BottomSheetDialogFragment {
             dismiss();
         });
 
-        closeButton.setOnClickListener(v -> dismiss());
+//        closeButton.setOnClickListener(v -> dismiss());
     }
 
     public void setGuestPickerListener(GuestPickerListener listener) {

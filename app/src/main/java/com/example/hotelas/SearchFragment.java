@@ -31,7 +31,7 @@ public class SearchFragment extends Fragment implements GuestPickerDialog.GuestP
     private String checkInDate;
     private String checkOutDate;
     private int adultsCount = 0;
-    private int childsCount = 0;
+    private int roomCount = 0;
     private int checkInDay = 0;
     private int checkInMonth = 0;
     private int checkInYear = 0;
@@ -73,7 +73,7 @@ public class SearchFragment extends Fragment implements GuestPickerDialog.GuestP
             Intent intent = new Intent(requireContext(), SearchResultActivity.class);
             intent.putExtra("location", location);
             intent.putExtra("adultsCount", adultsCount);
-            intent.putExtra("childsCount", childsCount);
+            intent.putExtra("roomCount", roomCount);
             intent.putExtra("checkInDay", checkInDay);
             intent.putExtra("checkInMonth", checkInMonth);
             intent.putExtra("checkInYear", checkInYear);
@@ -139,14 +139,14 @@ public class SearchFragment extends Fragment implements GuestPickerDialog.GuestP
     }
 
     @Override
-    public void onGuestCountsSelected(int adultsCount, int childsCount) {
+    public void onGuestCountsSelected(int adultsCount, int roomCount) {
         this.adultsCount = adultsCount;
-        this.childsCount = childsCount;
+        this.roomCount = roomCount;
         updateGuestPickerButtonText();
     }
 
     private void updateGuestPickerButtonText() {
-        String guestText = adultsCount + " Adults, " + childsCount + " Kids";
+        String guestText = adultsCount + " Adults, " + roomCount + " Rooms";
         guestpickerButton.setText(guestText);
     }
 

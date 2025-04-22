@@ -3,6 +3,7 @@ package com.example.hotelas;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -29,7 +30,7 @@ public class SearchResultActivity extends AppCompatActivity  {
     private ActivitySearchResultsBinding binding;
     private final List<HotelResultResponse> resultHotels = new ArrayList<>();
     int numOfAdults;
-    int numOfKids;
+    int roomCount;
     int checkInDay;
     int checkInMonth;
     int checkInYear;
@@ -53,7 +54,7 @@ public class SearchResultActivity extends AppCompatActivity  {
 
         String location = getIntent().getStringExtra("location");
         numOfAdults = getIntent().getIntExtra("adultsCount", 1);
-        numOfKids = getIntent().getIntExtra("childsCount", 2);
+        roomCount = getIntent().getIntExtra("roomCount", 1);
         checkInDay = getIntent().getIntExtra("checkInDay", 0);
         checkInMonth = getIntent().getIntExtra("checkInMonth", 0);
         checkInYear = getIntent().getIntExtra("checkInYear", 0);
@@ -79,26 +80,35 @@ public class SearchResultActivity extends AppCompatActivity  {
             getSupportActionBar().setTitle(location + " " + checkInFormatted + " - " + checkOutFormatted);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-
         searchHotel();
     }
 
     private void searchHotel () {
         HotelService hotelService = new HotelService();
+        binding.progressBar.setVisibility(View.VISIBLE);
 
-        hotelService.getListHotel(checkInDate,checkOutDate,(long)numOfAdults,(long)1, 0 ,new HotelService.CallBack<PagingResponse<HotelResultResponse>>() {
+        hotelService.getListHotel(checkInDate,checkOutDate,(long)numOfAdults,(long)roomCount, 0 ,new HotelService.CallBack<PagingResponse<HotelResultResponse>>() {
             @Override
             public void onSuccess(ApiResponse<PagingResponse<HotelResultResponse>> result) {
-                Log.d("",result.toString());
+                binding.progressBar.setVisibility(View.GONE);
                 hotelList = result.getResult().getContent();
 
-                hotelRecyclerView.setLayoutManager(new LinearLayoutManager(SearchResultActivity.this));
-                hotelAdapter = new SearchHotelResultAdapter(hotelList, SearchResultActivity.this);
-                hotelRecyclerView.setAdapter(hotelAdapter);
+                if (hotelList == null || hotelList.isEmpty()) {
+                    binding.textViewNoResults.setVisibility(View.VISIBLE);
+                    binding.searchResultsRecyclerView.setVisibility(View.GONE);
+                } else {
+                    binding.textViewNoResults.setVisibility(View.GONE);
+                    binding.searchResultsRecyclerView.setVisibility(View.VISIBLE);
+
+                    binding.searchResultsRecyclerView.setLayoutManager(new LinearLayoutManager(SearchResultActivity.this));
+                    hotelAdapter = new SearchHotelResultAdapter(hotelList, SearchResultActivity.this);
+                    binding.searchResultsRecyclerView.setAdapter(hotelAdapter);
+                }
             }
 
             @Override
             public void onFailure(String errorMessage) {
+                binding.progressBar.setVisibility(View.GONE);
 
             }
         });

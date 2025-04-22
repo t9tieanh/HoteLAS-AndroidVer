@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="12dp">
+
+        <!-- Ảnh phòng (dùng ViewPager2 hoặc ImageView tùy chọn) -->
+        <ImageView
+            android:id="@+id/roomImage"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/testhotel" />
+
+        <!-- Tên phòng -->
+        <TextView
+            android:id="@+id/roomName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Deluxe"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_marginTop="8dp" />
+
+        <!-- Mô tả / tiện ích -->
+        <TextView
+            android:id="@+id/roomDesc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="40m² - 1 giường cỡ king - Vòi tắm đứng"
+            android:textSize="14sp"
+            android:textColor="#666" />
+
+        <!-- Giá -->
+        <TextView
+            android:id="@+id/roomPrice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="1.084.709 VND"
+            android:textStyle="bold"
+            android:textColor="#E67E22"
+            android:textSize="16sp"
+            android:layout_marginTop="6dp" />
+
+        <!-- Nút Đặt -->
+        <Button
+            android:id="@+id/bookBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Đặt ngay"
+            android:backgroundTint="#E67E22"
+            android:textColor="#FFFFFF"
+            android:layout_gravity="end"
+            android:layout_marginTop="8dp" />
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
