@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.hotelas.R;
+import com.example.hotelas.constant.FileContant;
 import com.example.hotelas.model.response.room.RoomTypeResponse;
 
 import java.text.NumberFormat;
@@ -50,7 +51,9 @@ public class RoomTypeAdapter extends RecyclerView.Adapter<RoomTypeAdapter.RoomVi
 
         // Load ảnh (dùng Glide)
         Glide.with(context)
-                .load(room.getAvatar() != null ? room.getAvatar() : room.getImgRoomUrl().get(0))
+                .load(room.getAvatar() != null
+                        ? FileContant.FILE_API_URL + room.getAvatar()
+                        : FileContant.FILE_API_URL + room.getImgRoomUrl().get(0))
                 .placeholder(R.drawable.loading)
                 .into(holder.roomImage);
 

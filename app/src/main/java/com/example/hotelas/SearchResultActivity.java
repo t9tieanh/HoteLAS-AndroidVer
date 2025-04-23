@@ -23,7 +23,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class SearchResultActivity extends AppCompatActivity  {
+public class SearchResultActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
 //    private SearchResultsAdapter adapter;
@@ -101,7 +101,18 @@ public class SearchResultActivity extends AppCompatActivity  {
                     binding.searchResultsRecyclerView.setVisibility(View.VISIBLE);
 
                     binding.searchResultsRecyclerView.setLayoutManager(new LinearLayoutManager(SearchResultActivity.this));
-                    hotelAdapter = new SearchHotelResultAdapter(hotelList, SearchResultActivity.this);
+                    hotelAdapter = new SearchHotelResultAdapter(hotelList, SearchResultActivity.this, new SearchHotelResultAdapter.OnHotelClickListener() {
+                        @Override
+                        public void onHotelClick(HotelResultResponse hotel) {
+                            Intent intent = new Intent(SearchResultActivity.this, HotelDetailActivity.class);
+                            intent.putExtra("hotelId", hotel.getId());
+                            intent.putExtra("checkIn", checkInDate);
+                            intent.putExtra("checkOut", checkOutDate);
+                            intent.putExtra("adultsCount", numOfAdults);
+                            intent.putExtra("roomCount", roomCount);
+                            startActivity(intent);
+                        }
+                    });
                     binding.searchResultsRecyclerView.setAdapter(hotelAdapter);
                 }
             }
@@ -119,20 +130,6 @@ public class SearchResultActivity extends AppCompatActivity  {
         finish(); // Đóng activity hiện tại, quay lại activity trước
         return true;
     }
+
 }
-
-
-//    @Override
-//    public void onHotelClick(Hotel hotel) {
-////        Intent intent = new Intent(this, HotelDetailActivity.class);
-////        intent.putExtra("hotelId", hotel.getId());
-////        intent.putExtra("hotelName", hotel.getName());
-////        intent.putExtra("hotelRegion", hotel.getRegion());
-////        intent.putExtra("hotelPrice", hotel.getPriceInfo());
-////        intent.putExtra("hotelnumday", hotel.getNumberOfDays());
-////        intent.putExtra("hotelrev", hotel.getReviewScore());
-////        intent.putExtra("hotelTotalReview", hotel.getTotalReviewCount());
-////        intent.putExtra("imageurl", hotel.getImageUrl());
-////        startActivity(intent);
-//    }
 

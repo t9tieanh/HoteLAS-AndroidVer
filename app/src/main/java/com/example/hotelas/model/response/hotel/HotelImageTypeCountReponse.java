@@ -12,6 +12,10 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class HotelImageTypeCountReponse {
-    private HotelImageEnum imageType;
+    private String imageType;
     private Long count;
+
+    public HotelImageEnum getImageEnum() {
+        return HotelImageEnum.fromValue(imageType); // map thủ công
+    }
 }

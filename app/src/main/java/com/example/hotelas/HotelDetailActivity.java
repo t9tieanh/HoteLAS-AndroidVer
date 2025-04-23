@@ -2,6 +2,10 @@ package com.example.hotelas;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Toast;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -9,14 +13,21 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.bumptech.glide.Glide;
 import com.example.hotelas.adapter.AmenityAdapter;
 import com.example.hotelas.adapter.RoomTypeAdapter;
+import com.example.hotelas.adapter.SearchHotelResultAdapter;
 import com.example.hotelas.constant.FileContant;
 import com.example.hotelas.databinding.ActivityHotelDetailBinding;
 import com.example.hotelas.model.common.AmenityDTO;
+import com.example.hotelas.model.response.ApiResponse;
+import com.example.hotelas.model.response.hotel.HotelDestailResponse;
 import com.example.hotelas.model.response.room.RoomTypeResponse;
+import com.example.hotelas.service.hotel.HotelService;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class HotelDetailActivity extends AppCompatActivity {
 
@@ -26,6 +37,15 @@ public class HotelDetailActivity extends AppCompatActivity {
 
     private final List<AmenityDTO> amenities = new ArrayList<>();
     private final List<RoomTypeResponse> roomTypes = new ArrayList<>();
+    private HotelDestailResponse hotelDetail;
+    private boolean isExpanded = false;
+
+    // dùng để search
+    String hotelId;
+    Date checkIn;
+    Date checkOut;
+    int adultsCount;
+    int roomCount;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -34,64 +54,105 @@ public class HotelDetailActivity extends AppCompatActivity {
         binding = ActivityHotelDetailBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        initDataFromIntent();
-        setupAmenities();
-        setupBookButton();
-        setupRoomTypes();
+        // get data từ intent
+        Intent intent = getIntent();
+
+        hotelId = intent.getStringExtra("hotelId");
+        checkIn = (Date) intent.getSerializableExtra("checkIn");
+        checkOut = (Date) intent.getSerializableExtra("checkOut");
+        adultsCount = intent.getIntExtra("adultsCount", 1);
+        roomCount = intent.getIntExtra("roomCount", 1);
+
+        // code phần description
+        binding.toggleIntroText.setOnClickListener(v -> {
+            if (isExpanded) {
+                binding.introText.setMaxLines(4);
+                binding.toggleIntroText.setText("Xem thêm");
+            } else {
+                binding.introText.setMaxLines(Integer.MAX_VALUE);
+                binding.toggleIntroText.setText("Thu gọn");
+            }
+            isExpanded = !isExpanded;
+        });
+
+        getHotelDetail();
         setupHotelImages();
+
+
+        // set mở tất cả ảnh
+        binding.viewAllImagesButton.setOnClickListener(v -> {
+            Intent intentt = new Intent(this, PhotogalleryActivity.class);
+            intentt.putExtra("hotelId", hotelId);
+            intentt.putExtra("hotelName", hotelDetail.getName());
+            startActivity(intentt);
+        });
     }
 
-    private void setupRoomTypes() {
-        List<RoomTypeResponse> roomTypes = new ArrayList<>();
+    private void getHotelDetail() {
+        HotelService hotelService = new HotelService();
 
-        roomTypes.add(RoomTypeResponse.builder()
-                .id("1")
-                .name("Phòng Deluxe Giường Đôi")
-                .price(950_000L)
-                .maxOccupation(2L)
-                .freeChildren(1L)
-                .description("Có ban công, view hồ bơi, giường cỡ lớn")
-                .avatar("https://cdn.pixabay.com/photo/2016/11/29/03/53/hotel-1867768_960_720.jpg")
-                .imgRoomUrl(Arrays.asList(
-                        "https://cdn.pixabay.com/photo/2016/11/29/03/53/hotel-1867768_960_720.jpg",
-                        "https://cdn.pixabay.com/photo/2017/01/20/00/30/hotel-room-1997286_960_720.jpg"
-                ))
-                .build()
-        );
+        hotelService.getHotelDetail(
+                hotelId,
+                checkIn,
+                checkOut,
+                (long) adultsCount,
+                (long) roomCount,
+                new HotelService.CallBack<HotelDestailResponse>() {
+                    @Override
+                    public void onSuccess(ApiResponse<HotelDestailResponse> result) {
+                        hotelDetail = result.getResult();
+                        setHotelDetail();
+                    }
 
-        roomTypes.add(RoomTypeResponse.builder()
-                .id("2")
-                .name("Phòng Superior")
-                .price(750_000L)
-                .maxOccupation(2L)
-                .freeChildren(0L)
-                .description("Có cửa sổ, nội thất hiện đại")
-                .avatar("https://cdn.pixabay.com/photo/2017/01/20/00/30/hotel-room-1997286_960_720.jpg")
-                .imgRoomUrl(Arrays.asList(
-                        "https://cdn.pixabay.com/photo/2017/01/20/00/30/hotel-room-1997286_960_720.jpg"
-                ))
-                .build()
-        );
+                    @Override
+                    public void onFailure(String errorMessage) {
+                        Toast.makeText(HotelDetailActivity.this, "Lỗi: " + errorMessage, Toast.LENGTH_SHORT).show();
+                        Log.e("HotelDetailError", errorMessage);
+                    }
+                });
+    }
 
-        roomTypes.add(RoomTypeResponse.builder()
-                .id("3")
-                .name("Phòng Gia Đình")
-                .price(1_250_000L)
-                .maxOccupation(4L)
-                .freeChildren(2L)
-                .description("Phù hợp cho gia đình, rộng rãi, thoáng mát")
-                .avatar("https://cdn.pixabay.com/photo/2017/08/06/11/02/interior-2591364_960_720.jpg")
-                .imgRoomUrl(Arrays.asList(
-                        "https://cdn.pixabay.com/photo/2017/08/06/11/02/interior-2591364_960_720.jpg"
-                ))
-                .build()
-        );
+    private void setHotelDetail () {
+        // load ảnh
+        Glide.with(this)
+                .load(FileContant.FILE_API_URL +hotelDetail.getAvatar())
+                .into(binding.mainImageLeft);
 
-        // Truyền vào Adapter
-        RoomTypeAdapter adapter = new RoomTypeAdapter(roomTypes, this);
+        if (hotelDetail.getImgs().get(0) != null) {
+            Glide.with(this)
+                    .load(FileContant.FILE_API_URL + hotelDetail.getImgs().get(0))
+                    .into(binding.topRightImage);
+        }
+        if (hotelDetail.getImgs().get(1) != null) {
+            Glide.with(this)
+                    .load(FileContant.FILE_API_URL + hotelDetail.getImgs().get(1))
+                    .into(binding.topRightImage);
+        }
+
+
+        // tạo adapter cho room
+        RoomTypeAdapter adapter = new RoomTypeAdapter(hotelDetail.getRooms(), HotelDetailActivity.this);
         binding.roomTypeRecyclerView.setLayoutManager(
-                new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+                new LinearLayoutManager(HotelDetailActivity.this, LinearLayoutManager.VERTICAL, false));
         binding.roomTypeRecyclerView.setAdapter(adapter);
+
+
+        // tạo adapter cho amentity
+        amenityAdapter = new AmenityAdapter(hotelDetail.getFacilities());
+        binding.amenityRecyclerView.setLayoutManager(
+                new LinearLayoutManager(HotelDetailActivity.this, LinearLayoutManager.HORIZONTAL, false)
+        );
+        binding.amenityRecyclerView.setAdapter(amenityAdapter);
+
+        // set thông tin hotel
+        binding.hotelNameText.setText(hotelDetail.getName());
+        binding.introText.setText(hotelDetail.getDescription());
+
+        //get giá
+        NumberFormat format = NumberFormat.getInstance(new Locale("vi", "VN"));
+        binding.priceText.setText(format.format(hotelDetail.getOriginalPrice()) + " VND");
+        binding.subNameText.setText(hotelDetail.getSubName());
+        binding.addressText.setText(hotelDetail.getAddress().toString());
     }
 
     private void setupHotelImages() {
@@ -109,59 +170,6 @@ public class HotelDetailActivity extends AppCompatActivity {
     }
 
 
-    /**
-     * Lấy thông tin tên và địa chỉ khách sạn từ Intent (nếu có)
-     */
-    private void initDataFromIntent() {
-        Intent intent = getIntent();
-        String hotelName = intent.getStringExtra("hotelName");
-        String hotelAddress = intent.getStringExtra("hotelAddress");
-
-        if (hotelName != null) {
-            binding.hotelNameText.setText(hotelName);
-        }
-        if (hotelAddress != null) {
-            binding.addressText.setText(hotelAddress);
-        }
-    }
-
-    /**
-     * Khởi tạo danh sách tiện ích và gán vào RecyclerView
-     */
-    private void setupAmenities() {
-        // Ví dụ backend trả về 4 tiện ích, bạn hãy thay bằng dữ liệu thực tế khi fetch xong
-        amenities.add(new AmenityDTO(
-                "Máy lạnh",
-                "https://s3-ap-southeast-1.amazonaws.com/cntres-assets-ap-southeast-1-250226768838-cf675839782fd369/imageResource/2016/12/21/1482303254515-bd78d369590cba427807f5b7b3df6022.png",
-                "Cơ sở kinh doanh"
-        ));
-        amenities.add(new AmenityDTO(
-                "WiFi miễn phí",
-                "https://s3-ap-southeast-1.amazonaws.com/cntres-assets-ap-southeast-1-250226768838-cf675839782fd369/imageResource/2016/12/21/1482303254515-bd78d369590cba427807f5b7b3df6022.png",
-                "Dịch vụ"
-        ));
-        amenities.add(new AmenityDTO(
-                "Thang máy",
-                "https://s3-ap-southeast-1.amazonaws.com/cntres-assets-ap-southeast-1-250226768838-cf675839782fd369/imageResource/2016/12/21/1482303254515-bd78d369590cba427807f5b7b3df6022.png",
-                "Tiện ích chung"
-        ));
-        amenities.add(new AmenityDTO(
-                "Lễ tân 24h",
-                "https://s3-ap-southeast-1.amazonaws.com/cntres-assets-ap-southeast-1-250226768838-cf675839782fd369/imageResource/2016/12/21/1482303254515-bd78d369590cba427807f5b7b3df6022.png",
-                "Dịch vụ"
-        ));
-
-        // Khởi tạo adapter và layout manager ngang
-        amenityAdapter = new AmenityAdapter(amenities);
-        binding.amenityRecyclerView.setLayoutManager(
-                new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        );
-        binding.amenityRecyclerView.setAdapter(amenityAdapter);
-    }
-
-    /**
-     * Bắt sự kiện khi người dùng click nút "Chọn Phòng"
-     */
     private void setupBookButton() {
         binding.bookButton.setOnClickListener(v -> {
             // TODO: chuyển sang màn chọn phòng, hoặc thực hiện booking
