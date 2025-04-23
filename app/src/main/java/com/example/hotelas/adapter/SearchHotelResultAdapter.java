@@ -21,10 +21,16 @@ import java.util.List;
 public class SearchHotelResultAdapter extends RecyclerView.Adapter<SearchHotelResultAdapter.HotelViewHolder> {
     private List<HotelResultResponse> hotelList;
     private Context context;
+    private OnHotelClickListener listener;
 
-    public SearchHotelResultAdapter(List<HotelResultResponse> hotelList, Context context) {
+    public interface OnHotelClickListener {
+        void onHotelClick(HotelResultResponse hotel);
+    }
+
+    public SearchHotelResultAdapter(List<HotelResultResponse> hotelList, Context context, OnHotelClickListener listener) {
         this.hotelList = hotelList;
         this.context = context;
+        this.listener = listener;
     }
 
     @NonNull
@@ -37,6 +43,12 @@ public class SearchHotelResultAdapter extends RecyclerView.Adapter<SearchHotelRe
     @Override
     public void onBindViewHolder(@NonNull HotelViewHolder holder, int position) {
         HotelResultResponse hotel = hotelList.get(position);
+
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onHotelClick(hotel);
+            }
+        });
 
         holder.addressText.setText(hotel.getName());
         if (hotel.getAddress() != null) {
