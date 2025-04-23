@@ -1,6 +1,7 @@
 package com.example.hotelas.model.response.hotel;
 
 import com.example.hotelas.model.common.AddressDTO;
+import com.example.hotelas.model.common.AmenityDTO;
 import com.example.hotelas.model.response.room.RoomTypeResponse;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
@@ -22,7 +23,7 @@ public class HotelDestailResponse {
     Double originalPrice;
 
     AddressDTO address;
-    List<FacilitiesResponse> facilities;
+    List<AmenityDTO> facilities;
     List<String> imgs;
 
     String avatar;

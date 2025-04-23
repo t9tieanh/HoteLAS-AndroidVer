@@ -38,11 +38,11 @@ public enum HotelImageEnum {
     }
 
     @JsonCreator
-    public static HotelImageEnum fromValue(String value) throws Exception {
+    public static HotelImageEnum fromValue(String value) {
         return Arrays.stream(HotelImageEnum.values())
                 .filter(e -> e.description.equalsIgnoreCase(value))
                 .findFirst()
-                .orElseThrow(() -> new Exception("HotelImageNotFound"));
+                .orElse(HotelImageEnum.AVARTAR); // <-- dùng orElse với giá trị
     }
 }
 
