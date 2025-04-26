@@ -6,13 +6,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.HorizontalScrollView;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import com.example.hotelas.databinding.FragmentSearchBinding;
@@ -20,7 +16,6 @@ import com.example.hotelas.dialog.GuestPickerDialog;
 import com.example.hotelas.dialog.LocationDialogActivity;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.datepicker.MaterialDatePicker;
-import com.google.android.material.tabs.TabLayout;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -33,9 +28,6 @@ public class SearchFragment extends Fragment implements GuestPickerDialog.GuestP
     private MaterialButton datepickerButton;
     private MaterialButton guestpickerButton;
     private MaterialButton searchButton;
-    private HorizontalScrollView domesticView;
-    private HorizontalScrollView internationalView;
-    private TabLayout tabLayout;
     private String checkInDate;
     private String checkOutDate;
     private int adultsCount = 0;
@@ -62,10 +54,6 @@ public class SearchFragment extends Fragment implements GuestPickerDialog.GuestP
         datepickerButton = binding.datepickerButton;
         guestpickerButton = binding.guestpickerButton;
         searchButton = binding.searchButton;
-        tabLayout = binding.hotDealFragment.findViewById(R.id.tabLayout);
-        domesticView = binding.hotDealFragment.findViewById(R.id.domesticView);
-        internationalView = binding.hotDealFragment.findViewById(R.id.internationalView);
-
 
         locationButton.setOnClickListener(v -> {
             Intent intent = new Intent(requireContext(), LocationDialogActivity.class);
@@ -96,90 +84,6 @@ public class SearchFragment extends Fragment implements GuestPickerDialog.GuestP
             intent.putExtra("checkOutDate", checkOutDate);
             startActivity(intent);
         });
-
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                if (tab.getPosition() == 0) {
-                    domesticView.setVisibility(View.VISIBLE);
-                    internationalView.setVisibility(View.GONE);
-                } else {
-                    domesticView.setVisibility(View.GONE);
-                    internationalView.setVisibility(View.VISIBLE);
-                }
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
-
-        loadTab(tabLayout);
-        loadDomesticCard();
-        loadInternationCard();
-
-        loadDiscountPicture();
-    }
-
-    private void loadDiscountPicture() {
-        int[] cardIds = { R.id.picdiscount1, R.id.picdiscount2, R.id.picdiscount3 };
-        int[] imageRes = { R.drawable.picdiscount3, R.drawable.picdiscount1, R.drawable.picdiscount2 };
-
-        for (int i = 0; i < cardIds.length; i++) {
-            CardView card = binding.discountFragment.findViewById(cardIds[i]);
-            ImageView imageView = card.findViewById(R.id.imageDiscount);
-
-            imageView.setImageResource(imageRes[i]);
-        }
-    }
-    private void loadTab(TabLayout tabLayout) {
-        tabLayout.addTab(tabLayout.newTab().setText("Trong nước"));
-
-        TabLayout.Tab tabQuocTe = tabLayout.newTab().setText("Quốc tế");
-        tabLayout.addTab(tabQuocTe);
-
-        tabLayout.post(() -> {
-            View tabView = ((ViewGroup) tabLayout.getChildAt(0)).getChildAt(tabLayout.getTabCount() - 1);
-            ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) tabView.getLayoutParams();
-            params.leftMargin = 20;
-            tabView.setLayoutParams(params);
-        });
-    }
-
-    private void loadDomesticCard() {
-        int[] cardIds = { R.id.cardHCM, R.id.cardHN, R.id.cardDN, R.id.cardDL };
-        int[] imageRes = { R.drawable.hcm, R.drawable.hn, R.drawable.danang, R.drawable.dalat };
-        String[] locationNames = { "Hồ Chí Minh", "Hà Nội", "Đà Nẵng", "Đà Lạt" };
-
-        for (int i = 0; i < cardIds.length; i++) {
-            CardView card = binding.hotDealFragment.findViewById(cardIds[i]);
-            ImageView imageView = card.findViewById(R.id.imageLocation);
-            TextView textView = card.findViewById(R.id.locationName);
-
-            imageView.setImageResource(imageRes[i]);
-            textView.setText(locationNames[i]);
-        }
-    }
-
-    private void loadInternationCard() {
-        int[] cardIds = { R.id.cardFrance, R.id.cardSingapore, R.id.cardKorea, R.id.cardJapan, R.id.cardUK };
-        int[] imageRes = { R.drawable.france, R.drawable.singapore, R.drawable.korea, R.drawable.japan, R.drawable.uk };
-        String[] locationNames = { "Pháp", "Singapore", "Hàn Quốc", "Nhật Bản", "Anh" };
-
-        for (int i = 0; i < cardIds.length; i++) {
-            CardView card = binding.hotDealFragment.findViewById(cardIds[i]);
-            ImageView imageView = card.findViewById(R.id.imageLocation);
-            TextView textView = card.findViewById(R.id.locationName);
-
-            imageView.setImageResource(imageRes[i]);
-            textView.setText(locationNames[i]);
-        }
     }
 
     private void showDatePickerDialog() {

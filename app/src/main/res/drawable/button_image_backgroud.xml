@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Khi nhấn -->
+    <item android:state_pressed="true">
+        <color android:color="#1976D2"/> <!-- xanh dương -->
+    </item>
+    <!-- Bình thường -->
+    <item>
+        <color android:color="@android:color/white"/>
+    </item>
+</selector>

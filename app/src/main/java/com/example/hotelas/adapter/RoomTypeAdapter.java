@@ -26,9 +26,16 @@ public class RoomTypeAdapter extends RecyclerView.Adapter<RoomTypeAdapter.RoomVi
     private final List<RoomTypeResponse> roomList;
     private final Context context;
 
-    public RoomTypeAdapter(List<RoomTypeResponse> roomList, Context context) {
+    private final OnRoomBookClickListener bookClickListener;
+
+    public interface OnRoomBookClickListener {
+        void onBookClick(RoomTypeResponse room);
+    }
+
+    public RoomTypeAdapter(List<RoomTypeResponse> roomList, Context context, OnRoomBookClickListener bookClickListener) {
         this.roomList = roomList;
         this.context = context;
+        this.bookClickListener = bookClickListener;
     }
 
     @NonNull
@@ -59,6 +66,13 @@ public class RoomTypeAdapter extends RecyclerView.Adapter<RoomTypeAdapter.RoomVi
 
         holder.bookBtn.setOnClickListener(v -> {
             Toast.makeText(context, "Đặt phòng: " + room.getName(), Toast.LENGTH_SHORT).show();
+        });
+
+        // thêm sự kiện onclick
+        holder.bookBtn.setOnClickListener(v -> {
+            if (bookClickListener != null) {
+                bookClickListener.onBookClick(room);
+            }
         });
     }
 
