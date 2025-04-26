@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="HOT DEAL theo điểm đến"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:paddingBottom="8dp" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="285dp"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        app:tabBackground="@drawable/rounded_tab_bg"
+        app:tabGravity="fill"
+        app:tabIndicatorColor="@android:color/transparent"
+        app:tabMode="scrollable"
+        app:tabPaddingEnd="24dp"
+        app:tabPaddingStart="24dp"
+        app:tabTextAppearance="@style/CustomTabTextAppearance"
+        app:tabSelectedTextColor="@color/white"
+        app:tabTextColor="@color/black">
+
+    </com.google.android.material.tabs.TabLayout>
+
+
+    <HorizontalScrollView
+        android:id="@+id/domesticView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:overScrollMode="never"
+        android:scrollbars="none"
+        android:layout_marginTop="16dp">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <!-- Các card của "Trong nước" -->
+            <include layout="@layout/item_city_card"
+                android:id="@+id/cardHCM" />
+
+            <include layout="@layout/item_city_card"
+                android:id="@+id/cardHN" />
+
+            <include layout="@layout/item_city_card"
+                android:id="@+id/cardDN" />
+
+            <include layout="@layout/item_city_card"
+                android:id="@+id/cardDL" />
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <HorizontalScrollView
+        android:id="@+id/internationalView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:overScrollMode="never"
+        android:scrollbars="none"
+        android:layout_marginTop="16dp"
+        android:visibility="gone">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <include layout="@layout/item_city_card"
+                android:id="@+id/cardSingapore" />
+
+            <include layout="@layout/item_city_card"
+                android:id="@+id/cardFrance" />
+
+            <include layout="@layout/item_city_card"
+                android:id="@+id/cardUK" />
+
+            <include layout="@layout/item_city_card"
+                android:id="@+id/cardJapan" />
+
+            <include layout="@layout/item_city_card"
+                android:id="@+id/cardKorea" />
+
+        </LinearLayout>
+    </HorizontalScrollView>
+</LinearLayout>
