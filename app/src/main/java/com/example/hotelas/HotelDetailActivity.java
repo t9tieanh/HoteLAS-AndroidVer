@@ -1,12 +1,14 @@
 package com.example.hotelas;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -14,15 +16,25 @@ import com.bumptech.glide.Glide;
 import com.example.hotelas.adapter.AmenityAdapter;
 import com.example.hotelas.adapter.RoomTypeAdapter;
 import com.example.hotelas.adapter.SearchHotelResultAdapter;
+import com.example.hotelas.config.PaymentPrefManager;
+import com.example.hotelas.config.PrefManager;
 import com.example.hotelas.constant.FileContant;
 import com.example.hotelas.databinding.ActivityHotelDetailBinding;
 import com.example.hotelas.model.common.AmenityDTO;
+import com.example.hotelas.model.request.reservation.initial.InitialReservationRequest;
+import com.example.hotelas.model.request.reservation.initial.ReservationDetailRequest;
 import com.example.hotelas.model.response.ApiResponse;
 import com.example.hotelas.model.response.hotel.HotelDestailResponse;
+import com.example.hotelas.model.response.reservation.InitialReservationResponse;
 import com.example.hotelas.model.response.room.RoomTypeResponse;
+import com.example.hotelas.service.callback.ServiceExecutor;
 import com.example.hotelas.service.hotel.HotelService;
+import com.example.hotelas.service.reservation.ReservationAPIService;
+import com.example.hotelas.service.reservation.ReservationService;
 
 import java.text.NumberFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -39,6 +51,8 @@ public class HotelDetailActivity extends AppCompatActivity {
     private final List<RoomTypeResponse> roomTypes = new ArrayList<>();
     private HotelDestailResponse hotelDetail;
     private boolean isExpanded = false;
+
+    private PaymentPrefManager paymentPrefManager;
 
     // dùng để search
     String hotelId;
@@ -101,7 +115,9 @@ public class HotelDetailActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(ApiResponse<HotelDestailResponse> result) {
                         hotelDetail = result.getResult();
-                        setHotelDetail();
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            setHotelDetail();
+                        }
                     }
 
                     @Override
@@ -112,6 +128,7 @@ public class HotelDetailActivity extends AppCompatActivity {
                 });
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void setHotelDetail () {
         // load ảnh
         Glide.with(this)
@@ -131,7 +148,58 @@ public class HotelDetailActivity extends AppCompatActivity {
 
 
         // tạo adapter cho room
-        RoomTypeAdapter adapter = new RoomTypeAdapter(hotelDetail.getRooms(), HotelDetailActivity.this);
+        RoomTypeAdapter adapter = new RoomTypeAdapter(hotelDetail.getRooms(), HotelDetailActivity.this,
+                room -> {
+                    List<ReservationDetailRequest> reservationDetails = new ArrayList<>();
+                    reservationDetails.add(
+                            ReservationDetailRequest.builder()
+                                    .quantity(Long.valueOf(roomCount))
+                                    .roomId(room.getId())
+                                    .build()
+                    );
+
+                    // Chuyển đổi Date → LocalDate
+                    LocalDate localCheckIn = checkIn.toInstant()
+                            .atZone(ZoneId.systemDefault())
+                            .toLocalDate();
+
+                    LocalDate localCheckOut = checkOut.toInstant()
+                            .atZone(ZoneId.systemDefault())
+                            .toLocalDate();
+
+                    InitialReservationRequest request = InitialReservationRequest.builder()
+                            .reservationDetails(reservationDetails)
+                            .checkIn(localCheckIn)
+                            .checkOut(localCheckOut)
+                            .build();
+
+                    String token = new PrefManager(HotelDetailActivity.this).getAuthResponse().getAccessToken();
+                    if (token != null && !token.trim().isEmpty()) {
+                        ReservationService reservationService = new ReservationService(token);
+
+                        reservationService.createReservation(request, new ServiceExecutor.CallBack<InitialReservationResponse>() {
+                            @Override
+                            public void onSuccess(ApiResponse<InitialReservationResponse> result) {
+                                // lưu lại thông tin thanh toán vào pref
+                                paymentPrefManager = new PaymentPrefManager(HotelDetailActivity.this);
+                                paymentPrefManager.savePaymentInfo(result.getResult());
+
+                                Log.d("Tạo lịch đặt phòng","Tạo lịch đặt phòng thành công !");
+
+                                // Chuyển sang PaymentActivity
+                                Intent intent = new Intent(HotelDetailActivity.this, PaymentActivity.class);
+                                startActivity(intent);
+                            }
+
+                            @Override
+                            public void onFailure(String errorMessage) {
+                                Toast.makeText(HotelDetailActivity.this, errorMessage, Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+                    }
+                });
+
         binding.roomTypeRecyclerView.setLayoutManager(
                 new LinearLayoutManager(HotelDetailActivity.this, LinearLayoutManager.VERTICAL, false));
         binding.roomTypeRecyclerView.setAdapter(adapter);
