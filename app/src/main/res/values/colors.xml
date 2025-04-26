@@ -9,6 +9,8 @@
     <color name="white">#FFFFFFFF</color>
     <color name="orange">#FFE1A141</color>
     <color name="md_theme_primary">#3483E6</color>
+    <color name="blue">#BACAED</color>
     <color name="md_theme_onPrimary">#FFFFFF</color>
     <color name="md_theme_background">#FFFFFF</color>
+    <color name="red">#e74c3c</color>
 </resources>

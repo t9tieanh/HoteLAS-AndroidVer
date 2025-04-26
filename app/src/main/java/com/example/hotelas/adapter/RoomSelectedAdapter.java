@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.hotelas.R;
+import com.example.hotelas.constant.FileContant;
 import com.example.hotelas.model.response.reservation.common.ReservationDetailResponse;
 
 import java.util.List;
@@ -43,7 +44,7 @@ public class RoomSelectedAdapter extends RecyclerView.Adapter<RoomSelectedAdapte
 
         // Load ảnh (nếu có URL) - sử dụng Glide hoặc Picasso
         Glide.with(context)
-                .load(room.getImgUrl())
+                .load(FileContant.FILE_API_URL + room.getImgUrl())
                 .placeholder(R.drawable.testhotel)
                 .into(holder.roomImage);
     }

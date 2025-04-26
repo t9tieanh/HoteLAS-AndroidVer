@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+<ScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     android:padding="16dp">
 
     <LinearLayout
@@ -40,6 +43,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:buttonTint="@color/white"
+                        android:checked="true"
                         android:text="Thanh toán bằng ví điện tử"
                         android:textColor="@color/white"
                         android:textStyle="bold" />
@@ -52,7 +56,7 @@
                     android:orientation="vertical"
                     android:background="@android:color/white"
                     android:padding="16dp"
-                    android:visibility="gone">
+                    >
 
                     <TextView
                         android:id="@+id/tv_e_wallet_desc"
@@ -60,6 +64,22 @@
                         android:layout_height="wrap_content"
                         android:text="Thanh toán dễ dàng và an toàn với ví điện tử — không cần tiền mặt, xử lý nhanh chóng, bảo mật cao, giúp bạn mua sắm thuận tiện mọi lúc, mọi nơi."
                         android:textColor="@color/black" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/vnPaybtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/white"
+                        android:text="Thanh toán bằng VN PAY"
+                        android:textColor="@color/black"
+                        android:textSize="10sp"
+                        app:icon="@drawable/vnpay_logo_fit"
+                        app:iconGravity="textStart"
+                        app:iconPadding="8dp"
+                        app:iconSize="24dp"
+                        app:iconTint="@null" />
+
+
                 </LinearLayout>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -123,3 +143,5 @@
 
     </LinearLayout>
 </ScrollView>
+
+</layout>

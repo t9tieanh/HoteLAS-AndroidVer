@@ -54,6 +54,11 @@ dependencies {
 
     // json
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.3'
+    implementation 'com.squareup.retrofit2:converter-jackson:2.9.0'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.3'
+
+    //chrome
+    implementation 'androidx.browser:browser:1.6.0'
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'

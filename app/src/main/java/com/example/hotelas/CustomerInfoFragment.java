@@ -1,75 +1,54 @@
 package com.example.hotelas;
 
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hotelas.adapter.AppliedDiscountAdapter;
-import com.example.hotelas.adapter.RoomSelectedAdapter;
-import com.example.hotelas.model.common.AddressDTO;
+import com.example.hotelas.config.PrefManager;
+import com.example.hotelas.databinding.FragmentCustomerInfoBinding;
 import com.example.hotelas.model.common.DiscountDTO;
-import com.example.hotelas.model.response.reservation.common.ReservationDetailResponse;
-import com.google.android.material.textfield.TextInputEditText;
+import com.example.hotelas.model.request.reservation.updateinfo.UpdateReservationInfoRequest;
+import com.example.hotelas.model.response.ApiResponse;
+import com.example.hotelas.model.response.CreationResponse;
+import com.example.hotelas.model.response.CustomerResponseDTO;
+import com.example.hotelas.service.callback.ServiceExecutor;
+import com.example.hotelas.service.reservation.ReservationService;
+import com.example.hotelas.service.user.UserService;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CustomerInfoFragment extends Fragment {
-    private TextInputEditText edtFullName, edtPhone, edtEmail;
+public class CustomerInfoFragment extends Fragment implements PaymentActivity.OnNextStepClickListener {
 
-    public CustomerInfoFragment() {
-        // Required empty public constructor
-    }
+    private FragmentCustomerInfoBinding binding;
+    private UserService userService;
+    private ReservationService reservationService;
+    private CustomerResponseDTO customerInfo;
+
+    String reservationId;
+
+
+    public CustomerInfoFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_customer_info, container, false);
+        binding = FragmentCustomerInfoBinding.inflate(inflater, container, false);
+        View view = binding.getRoot();
 
-        // Sửa lại findViewById
-//        RecyclerView recyclerView = view.findViewById(R.id.selectedRoomsRecyclerView);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-//
-//        // Dữ liệu ảo
-//        List<ReservationDetailResponse> selectedRooms = new ArrayList<>();
-//
-//        selectedRooms.add(ReservationDetailResponse.builder()
-//                .hotelName("Aurora Palace")
-//                .address(new AddressDTO("45 Đ. Nguyễn Tất Thành", "Quận 7", "Hồ Chí Minh", "Việt Nam"))
-//                .hotelImgUrl("https://example.com/hotel.jpg")
-//                .name("Basic Room")
-//                .description("Phòng Deluxe Ocean View mang đến không gian sang trọng và thoải mái với diện tích rộng rãi, thiết kế hiện đại.")
-//                .imgUrl("https://example.com/room1.jpg")
-//                .quantity(2L)
-//                .price(1200000.0)
-//                .build());
-//
-//        selectedRooms.add(ReservationDetailResponse.builder()
-//                .hotelName("Aurora Palace")
-//                .address(new AddressDTO("45 Đ. Nguyễn Tất Thành", "Quận 7", "Hồ Chí Minh", "Việt Nam"))
-//                .hotelImgUrl("https://example.com/hotel.jpg")
-//                .name("Suite Room")
-//                .description("Phòng cao cấp với view biển, giường lớn, nội thất hiện đại và bồn tắm riêng.")
-//                .imgUrl("https://example.com/room2.jpg")
-//                .quantity(1L)
-//                .price(2200000.0)
-//                .build());
-//
-//        // Sửa lại context khi truyền vào Adapter
-//        RoomSelectedAdapter adapter = new RoomSelectedAdapter(requireContext(), selectedRooms);
-//        recyclerView.setAdapter(adapter);
+        reservationId = ((PaymentActivity) requireActivity()).reservationId;
 
-
-        RecyclerView recyclerView = view.findViewById(R.id.appliedDiscountRecycler);
-        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        // Setup RecyclerView
+        binding.appliedDiscountRecycler.setLayoutManager(new LinearLayoutManager(requireContext()));
 
         List<DiscountDTO> appliedDiscounts = new ArrayList<>();
-// Thêm các discount đã apply vào đây
         appliedDiscounts.add(
                 DiscountDTO.builder()
                         .name("Summer Sale")
@@ -78,10 +57,94 @@ public class CustomerInfoFragment extends Fragment {
         );
 
         AppliedDiscountAdapter adapter = new AppliedDiscountAdapter(appliedDiscounts);
-        recyclerView.setAdapter(adapter);
+        binding.appliedDiscountRecycler.setAdapter(adapter);
 
+        setCustomerInfo();
 
         return view;
     }
 
+    private void setCustomerInfo() {
+        String token = new PrefManager(requireContext()).getAuthResponse().getAccessToken();
+        userService = new UserService(token);
+
+        userService.getCustomerProfile(new ServiceExecutor.CallBack<CustomerResponseDTO>() {
+            @Override
+            public void onSuccess(ApiResponse<CustomerResponseDTO> result) {
+                customerInfo = result.getResult();
+
+                binding.nameText.setText(customerInfo.getName());
+                binding.phoneText.setText(customerInfo.getPhone());
+                binding.emailText.setText(customerInfo.getEmail());
+            }
+
+            @Override
+            public void onFailure(String errorMessage) {
+                Toast.makeText(requireContext(), "Lỗi: " + errorMessage, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private boolean validate() {
+        String name = binding.nameText.getText().toString().trim();
+        String phone = binding.phoneText.getText().toString().trim();
+        String email = binding.emailText.getText().toString().trim();
+
+        // Kiểm tra name
+        if (name.isEmpty()) {
+            Toast.makeText(requireContext(), "Vui lòng nhập tên khách hàng", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        // Kiểm tra phone
+        if (phone.isEmpty()) {
+            Toast.makeText(requireContext(), "Vui lòng nhập số điện thoại", Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (!Patterns.PHONE.matcher(phone).matches()) {
+            Toast.makeText(requireContext(), "Số điện thoại không hợp lệ", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        // Kiểm tra email
+        if (email.isEmpty()) {
+            Toast.makeText(requireContext(), "Vui lòng nhập email", Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            Toast.makeText(requireContext(), "Email không đúng định dạng", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public void onNextStep() {
+        if (!validate())
+            return;
+
+        String token = new PrefManager(requireContext()).getAuthResponse().getAccessToken();
+        reservationService = new ReservationService(token);
+
+
+        UpdateReservationInfoRequest request = UpdateReservationInfoRequest.builder()
+                .email(binding.emailText.getText().toString())
+                .name(binding.nameText.getText().toString())
+                .phone(binding.phoneText.getText().toString())
+                .reservationId(reservationId)
+                .build();
+
+        reservationService.updateCustomerInfoReservation(request, new ServiceExecutor.CallBack<CreationResponse>() {
+            @Override
+            public void onSuccess(ApiResponse<CreationResponse> result) {
+                Toast.makeText(requireContext(), result.getMessage(), Toast.LENGTH_SHORT).show();
+                ((PaymentActivity)requireContext()).nextStep(1); // -> chuyển đến step tiếp theo -> thanh toán
+            }
+
+            @Override
+            public void onFailure(String errorMessage) {
+                Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 }
+

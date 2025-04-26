@@ -7,6 +7,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.example.hotelas.ConfirmedFragment;
 import com.example.hotelas.CustomerInfoFragment;
+import com.example.hotelas.PaymentActivity;
 import com.example.hotelas.PaymentDetailFragment;
 
 public class PaymentPagerAdapter extends FragmentStateAdapter {
