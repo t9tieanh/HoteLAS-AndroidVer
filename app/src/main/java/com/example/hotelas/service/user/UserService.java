@@ -1,5 +1,8 @@
 package com.example.hotelas.service.user;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+
 import com.example.hotelas.config.RetrofitClient;
 import com.example.hotelas.model.response.ApiResponse;
 import com.example.hotelas.model.response.CustomerResponseDTO;
@@ -7,8 +10,15 @@ import com.example.hotelas.model.response.reservation.ReservationStepResponse;
 import com.example.hotelas.service.callback.ServiceExecutor;
 import com.example.hotelas.service.reservation.ReservationAPIService;
 import com.example.hotelas.service.reservation.ReservationService;
+import com.example.hotelas.utils.ImageUtils;
 import com.google.gson.Gson;
 
+import java.io.File;
+import java.io.IOException;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -24,5 +34,49 @@ public class UserService {
     public void getCustomerProfile(ServiceExecutor.CallBack<CustomerResponseDTO> callback) {
         Call<ApiResponse<CustomerResponseDTO>> call = apiService.getCustomerProfile();
         ServiceExecutor.enqueue(call, callback);
+    }
+
+
+    // active account
+    public void activeAccount (
+            Context context,
+            String username,
+            String password,
+            String name,
+            String email,
+            Bitmap img,
+            ServiceExecutor.CallBack<Boolean> callback
+    ) {
+
+        // Tạo các RequestBody từ thông tin người dùng
+        RequestBody usernameRequest = RequestBody.create(MediaType.parse("text/plain"), username);
+        RequestBody passwordRequest = RequestBody.create(MediaType.parse("text/plain"), password);
+        RequestBody nameRequest = RequestBody.create(MediaType.parse("text/plain"), name);
+        RequestBody emailRequest = RequestBody.create(MediaType.parse("text/plain"), email);
+
+        // Gọi API của Retrofit với các tham số đã chuẩn bị
+        Call<ApiResponse<Boolean>> call = apiService.activeAccount(
+                usernameRequest,
+                passwordRequest,
+                nameRequest,
+                emailRequest,
+                getUserImage(img, context)
+        );
+
+        // Xử lý kết quả bằng ServiceExecutor
+        ServiceExecutor.enqueue(call, callback);
+    }
+
+    private MultipartBody.Part getUserImage (Bitmap bitmap, Context context) {
+
+        // Chuyển Bitmap thành File
+        File imgFile = null;
+        try {
+            imgFile = ImageUtils.bitmapToFile(bitmap, context);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return ImageUtils.createImagePart(imgFile);
     }
 }
