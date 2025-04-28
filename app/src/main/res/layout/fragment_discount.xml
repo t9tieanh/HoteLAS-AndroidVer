@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Vô vàn ưu đãi"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:paddingBottom="8dp" />
+
+
+    <HorizontalScrollView
+        android:id="@+id/discountPicture"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:overScrollMode="never"
+        android:scrollbars="none"
+        android:layout_marginTop="16dp">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <!-- Các card của "Trong nước" -->
+            <include layout="@layout/item_discount_picture"
+                android:id="@+id/picdiscount1" />
+
+            <include layout="@layout/item_discount_picture"
+                android:id="@+id/picdiscount2" />
+
+            <include layout="@layout/item_discount_picture"
+                android:id="@+id/picdiscount3" />
+
+        </LinearLayout>
+    </HorizontalScrollView>
+
+</LinearLayout>
