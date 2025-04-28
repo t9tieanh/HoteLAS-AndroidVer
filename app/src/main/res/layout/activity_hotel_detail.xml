@@ -9,17 +9,89 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <!-- Directly place Toolbar here -->
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorSurface"
+            android:contentInsetStartWithNavigation="0dp"
+            android:elevation="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <!-- Logo and title -->
+                <ImageView
+                    android:id="@+id/ivLogo"
+                    android:layout_width="55dp"
+                    android:layout_height="32dp"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/logo"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <LinearLayout
+                    android:id="@+id/location_container"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingStart="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/ivLogo"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/tvToolbarTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Chào mừng bạn đã đến với hệ thống đặt phòng HoteAS"
+                        android:textColor="@android:color/darker_gray"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tvToolbarSubtitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Xin chào Phạm Tiến Anh"
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <!-- Login Button -->
+                <Button
+                    android:id="@+id/btnLogin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/md_theme_primary"
+                    android:text="Đăng nhập"
+                    android:textSize="10sp"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.appcompat.widget.Toolbar>
+
         <!-- Nội dung cuộn -->
         <androidx.core.widget.NestedScrollView
             android:id="@+id/nestedScrollView"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:padding="16dp"
             android:clipToPadding="false"
-            app:layout_constraintTop_toTopOf="parent"
+            android:padding="16dp"
             app:layout_constraintBottom_toTopOf="@+id/bottomBar"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -110,14 +182,14 @@
                     android:id="@+id/hotelNameText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="M Village Living Nguyen Van Huong"
-                    android:textSize="22sp"
-                    android:textStyle="bold"
-                    android:textColor="#000000"
                     android:paddingTop="4dp"
-                    android:paddingBottom="4dp" />
+                    android:paddingBottom="4dp"
+                    android:text="M Village Living Nguyen Van Huong"
+                    android:textColor="#000000"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
 
-<!--                subname-->
+                <!--                subname-->
                 <TextView
                     android:id="@+id/subNameText"
                     android:layout_width="match_parent"
@@ -141,8 +213,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:layout_marginBottom="8dp"
-                    app:cardElevation="2dp"
-                    app:cardCornerRadius="12dp">
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="2dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -154,17 +226,17 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:gravity="center_vertical">
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
 
                             <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:text="Tiện ích"
-                                android:textStyle="bold"
+                                android:textColor="#000000"
                                 android:textSize="16sp"
-                                android:textColor="#000000" />
+                                android:textStyle="bold" />
                         </LinearLayout>
 
                         <!-- RecyclerView tiện ích -->
@@ -173,8 +245,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
-                            android:overScrollMode="never"
                             android:nestedScrollingEnabled="false"
+                            android:overScrollMode="never"
                             tools:listitem="@layout/item_amenity" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -192,8 +264,8 @@
                     android:id="@+id/introText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:maxLines="4"
                     android:ellipsize="end"
+                    android:maxLines="4"
                     android:text="Lưu trú tại M Village là lựa chọn tốt khi thăm Thảo Điền..."
                     android:textSize="14sp" />
 
@@ -204,29 +276,29 @@
                     android:layout_marginTop="4dp"
                     android:text="Xem thêm"
                     android:textColor="#E67E22"
-                    android:textStyle="bold"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
 
 
                 <!-- Phòng có sẵn -->
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Phòng có sẵn"
-                    android:textStyle="bold"
-                    android:textSize="16sp"
                     android:layout_marginTop="24dp"
-                    android:textColor="#000000" />
+                    android:text="Phòng có sẵn"
+                    android:textColor="#000000"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
                 <!-- Thông tin ngày và số người, số phòng -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
                     android:layout_marginTop="8dp"
-                    android:padding="8dp"
-                    android:background="#E0F3FF">
+                    android:background="#E0F3FF"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
 
                     <!-- Icon lịch và ngày -->
                     <ImageView
@@ -285,12 +357,10 @@
                     android:id="@+id/roomTypeRecyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:nestedScrollingEnabled="false"
                     android:layout_marginTop="8dp"
+                    android:nestedScrollingEnabled="false"
                     android:overScrollMode="never"
                     tools:listitem="@layout/item_room_type" />
-
-
 
 
             </LinearLayout>
