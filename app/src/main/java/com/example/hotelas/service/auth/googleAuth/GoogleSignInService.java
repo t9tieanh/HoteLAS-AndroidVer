@@ -28,7 +28,7 @@ public class GoogleSignInService {
     private GoogleSignInClient buildGoogleSignInClient(Context context) {
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
-                .requestServerAuthCode("Điền client id vào đây nha anh sang")
+                .requestServerAuthCode("990252960408-en8esmedq38448r24asrelsmnjfgm5im.apps.googleusercontent.com")
                 .build();
 
         return GoogleSignIn.getClient(context, gso);
