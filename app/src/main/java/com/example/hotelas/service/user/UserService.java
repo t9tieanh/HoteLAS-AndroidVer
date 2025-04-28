@@ -4,14 +4,12 @@ import android.content.Context;
 import android.graphics.Bitmap;
 
 import com.example.hotelas.config.RetrofitClient;
+import com.example.hotelas.model.request.user.CustomerRequestDTO;
 import com.example.hotelas.model.response.ApiResponse;
+import com.example.hotelas.model.response.CreationResponse;
 import com.example.hotelas.model.response.CustomerResponseDTO;
-import com.example.hotelas.model.response.reservation.ReservationStepResponse;
 import com.example.hotelas.service.callback.ServiceExecutor;
-import com.example.hotelas.service.reservation.ReservationAPIService;
-import com.example.hotelas.service.reservation.ReservationService;
 import com.example.hotelas.utils.ImageUtils;
-import com.google.gson.Gson;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,8 +18,6 @@ import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class UserService {
 
@@ -62,6 +58,36 @@ public class UserService {
                 emailRequest,
                 getUserImage(img, context)
         );
+
+        // Xử lý kết quả bằng ServiceExecutor
+        ServiceExecutor.enqueue(call, callback);
+    }
+
+
+    // update image user
+    public void updateUserImage (
+            Context context,
+            MultipartBody.Part img,
+            ServiceExecutor.CallBack<CreationResponse> callback
+    ) {
+
+        // Gọi API của Retrofit với các tham số đã chuẩn bị
+        Call<ApiResponse<CreationResponse>> call = apiService.updateImage(
+                img
+        );
+
+        // Xử lý kết quả bằng ServiceExecutor
+        ServiceExecutor.enqueue(call, callback);
+    }
+
+    // update image user
+    public void editCustomerProfile (
+            CustomerRequestDTO request,
+            ServiceExecutor.CallBack<CustomerResponseDTO> callback
+    ) {
+        // Gọi API của Retrofit với các tham số đã chuẩn bị
+        Call<ApiResponse<CustomerResponseDTO>> call
+                = apiService.editCustomerProfile(request.getName(), request.getPhone(), request.getEmail());
 
         // Xử lý kết quả bằng ServiceExecutor
         ServiceExecutor.enqueue(call, callback);

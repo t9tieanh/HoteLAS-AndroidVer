@@ -16,7 +16,6 @@ import com.example.hotelas.config.PrefManager;
 import com.example.hotelas.constant.FileContant;
 import com.example.hotelas.databinding.FragmentProfileBinding;
 import com.example.hotelas.model.response.ApiResponse;
-import com.example.hotelas.model.response.AuthenticationResponse;
 import com.example.hotelas.model.response.CustomerResponseDTO;
 import com.example.hotelas.service.callback.ServiceExecutor;
 import com.example.hotelas.service.user.UserService;
@@ -49,14 +48,16 @@ public class ProfileFragment extends Fragment {
         // Gọi API để lấy profile
         getUserProfile();
 
-//        // Nút "Chỉnh sửa thông tin" (ví dụ)
-//        binding.btnSaveChange.setOnClickListener(v -> {
-//            // navigate tới màn chỉnh sửa...
-//        });
-//        // Nút "Xem lịch sử đặt phòng"
-//        binding.btnViewHistory.setOnClickListener(v -> {
-//            // navigate tới lịch sử...
-//        });
+        // Nút "Chỉnh sửa thông tin" (ví dụ)
+        binding.btnSaveChange.setOnClickListener(v -> {
+            updateProfile();
+        });
+        // Nút "Xem lịch sử đặt phòng"
+        binding.btnViewHistory.setOnClickListener(v -> {
+            // navigate tới lịch sử...
+        });
+
+        binding.btnLogout.setOnClickListener( v -> logout());
     }
 
     private void getUserProfile() {
@@ -106,6 +107,18 @@ public class ProfileFragment extends Fragment {
 
         // transfer activity
         Intent intent = new Intent(requireContext(), StartActivity.class);
+        startActivity(intent);
+    }
+
+    private void updateProfile () {
+        // transfer activity
+        Intent intent = new Intent(requireContext(), EditProfileActivity.class);
+
+        intent.putExtra("user_name", user.getName());
+        intent.putExtra("user_email", user.getEmail());
+        intent.putExtra("user_phone", user.getPhone());
+        intent.putExtra("image_url",  user.getImgUrl());
+
         startActivity(intent);
     }
 

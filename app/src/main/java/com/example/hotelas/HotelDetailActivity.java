@@ -130,6 +130,8 @@ public class HotelDetailActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void setHotelDetail () {
+        binding.tvToolbarSubtitle.setText("Khách sạn" + hotelDetail.getName());
+
         // load ảnh
         Glide.with(this)
                 .load(FileContant.FILE_API_URL +hotelDetail.getAvatar())
@@ -150,6 +152,14 @@ public class HotelDetailActivity extends AppCompatActivity {
         // tạo adapter cho room
         RoomTypeAdapter adapter = new RoomTypeAdapter(hotelDetail.getRooms(), HotelDetailActivity.this,
                 room -> {
+
+                    PrefManager prefManager = new PrefManager(HotelDetailActivity.this);
+                    if (!prefManager.isLoggedIn()) {
+                        Toast.makeText(HotelDetailActivity.this, "Vui lòng đăng nhập để thực hiện đặt phòng !", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+
                     List<ReservationDetailRequest> reservationDetails = new ArrayList<>();
                     reservationDetails.add(
                             ReservationDetailRequest.builder()
@@ -173,7 +183,7 @@ public class HotelDetailActivity extends AppCompatActivity {
                             .checkOut(localCheckOut)
                             .build();
 
-                    String token = new PrefManager(HotelDetailActivity.this).getAuthResponse().getAccessToken();
+                    String token = prefManager.getAuthResponse().getAccessToken();
                     if (token != null && !token.trim().isEmpty()) {
                         ReservationService reservationService = new ReservationService(token);
 

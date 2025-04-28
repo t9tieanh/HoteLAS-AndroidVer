@@ -1,11 +1,14 @@
 package com.example.hotelas;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.widget.Toast;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.example.hotelas.config.PrefManager;
 import com.example.hotelas.databinding.ActivityStartBinding;
@@ -33,10 +36,10 @@ public class StartActivity extends AppCompatActivity {
         if (user != null && user.isValid()) {
             Intent intent = new Intent(StartActivity.this, MainActivity.class);
             startActivity(intent);
-            return;
+            finish();
         }
 
-        binding.continueEmail.setOnClickListener(v -> {
+        binding.loginGmail.setOnClickListener(v -> {
             Intent intent = new Intent(StartActivity.this, LoginEmailActivity.class);
             startActivity(intent);
         });
@@ -47,6 +50,15 @@ public class StartActivity extends AppCompatActivity {
         binding.loginGoogle.setOnClickListener(v -> {
             googleSignInService.signIn();
         });
+
+        binding.buttonExplore.setOnClickListener(v -> {
+            Intent intent = new Intent(StartActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        });
+
+        // Gọi hàm setup chữ Hotelas màu
+        setUpHotelasTitle();
     }
 
 
@@ -119,5 +131,25 @@ public class StartActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    private void setUpHotelasTitle() {
+        // Tạo nội dung "Hotelas"
+        SpannableString spannableString = new SpannableString("Hotelas");
+
+        // Set màu chữ "H" (0 -> 1)
+        spannableString.setSpan(
+                new ForegroundColorSpan(ContextCompat.getColor(this, R.color.red)),
+                0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        );
+
+        // Set màu chữ "otelas" (1 -> 7)
+        spannableString.setSpan(
+                new ForegroundColorSpan(ContextCompat.getColor(this, R.color.md_theme_primary)),
+                1, 7, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        );
+
+        // Gán vào TextView bằng binding
+        binding.textTitle.setText(spannableString);
     }
 }
