@@ -33,6 +33,10 @@
             android:exported="true">
         </activity>
         <activity
+            android:name=".ProfileActivity"
+            android:exported="true">
+        </activity>
+        <activity
             android:name=".EnterPasswordActivity"
             android:exported="true">
         </activity>

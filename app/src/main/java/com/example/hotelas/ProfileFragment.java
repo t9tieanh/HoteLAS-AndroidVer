@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,54 +15,90 @@ import com.bumptech.glide.Glide;
 import com.example.hotelas.config.PrefManager;
 import com.example.hotelas.constant.FileContant;
 import com.example.hotelas.databinding.FragmentProfileBinding;
+import com.example.hotelas.model.response.ApiResponse;
 import com.example.hotelas.model.response.AuthenticationResponse;
+import com.example.hotelas.model.response.CustomerResponseDTO;
+import com.example.hotelas.service.callback.ServiceExecutor;
+import com.example.hotelas.service.user.UserService;
+
 
 public class ProfileFragment extends Fragment {
-
     private FragmentProfileBinding binding;
+    private UserService userService;
+    private CustomerResponseDTO user;
 
-    @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
-                             @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+                             ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate với ViewBinding
         binding = FragmentProfileBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 
     @Override
-    public void onViewCreated(@NonNull View view,
-                              @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        setUserInfo();
-//        // Gán dữ liệu ví dụ
-//        binding.textViewName.setText("Xin chào, Tiến Anh!");
+        // Khởi tạo UserService với token
+        String token = new PrefManager(requireContext())
+                .getAuthResponse()
+                .getAccessToken();
+        userService = new UserService(token);
+
+        // Gọi API để lấy profile
+        getUserProfile();
+
+//        // Nút "Chỉnh sửa thông tin" (ví dụ)
+//        binding.btnSaveChange.setOnClickListener(v -> {
+//            // navigate tới màn chỉnh sửa...
+//        });
+//        // Nút "Xem lịch sử đặt phòng"
+//        binding.btnViewHistory.setOnClickListener(v -> {
+//            // navigate tới lịch sử...
+//        });
     }
 
-    private void setUserInfo () {
-        PrefManager prefManager = new PrefManager(requireContext());
-        AuthenticationResponse user = prefManager.getAuthResponse();
-
-        if (user != null) {
-            // lấy thông tin từ user
-            if (user.getImageUrl() != null) {
-                String imgUrl = FileContant.FILE_API_URL + user.getImageUrl();
-                Glide.with(requireContext()).load(imgUrl)
-                        .into(binding.profilePictureImageView);
+    private void getUserProfile() {
+        userService.getCustomerProfile(new ServiceExecutor.CallBack<CustomerResponseDTO>() {
+            @Override
+            public void onSuccess(ApiResponse<CustomerResponseDTO> result) {
+                user = result.getResult();
+                setUserInfo(user);
             }
-            binding.nameTextView.setText(user.getUsername());
-
-
-            // tắt process
-            binding.logoutButton.setOnClickListener(
-                    v -> {logout();}
-            );
-            binding.loadingProgressBar.setVisibility(View.GONE);
-        } else {
-            logout();
-        }
+            @Override
+            public void onFailure(String errorMessage) {
+                Toast.makeText(requireContext(),
+                                errorMessage,
+                                Toast.LENGTH_SHORT)
+                        .show();
+            }
+        });
     }
+
+    private void setUserInfo(CustomerResponseDTO customer) {
+        binding.tvUserName.setText(customer.getName());
+        binding.tvUserEmail.setText(customer.getEmail());
+        binding.tvValueName.setText(customer.getName());
+        binding.tvValueEmail.setText(customer.getEmail());
+
+        if (customer.getPhone() == null || customer.getPhone().isEmpty()) {
+            binding.tvValueMobile.setText("Chưa có");
+        } else {
+            binding.tvValueMobile.setText(customer.getPhone());
+        }
+
+        binding.tvLoyaltyPoints.setText(
+                String.valueOf(customer.getLoyaltyPoints()));
+        binding.tvJobsCompleted.setText("37");  // hoặc giá trị thực từ API
+
+        Glide.with(this)
+                .load(FileContant.FILE_API_URL + customer.getImgUrl())
+                .into(binding.imgAvatar);
+
+        binding.btnLogout.setOnClickListener(v -> logout());
+    }
+
 
     private void logout () {
         PrefManager prefManager = new PrefManager(requireContext());
@@ -75,6 +112,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        // Giải phóng binding
         binding = null;
     }
 }
