@@ -52,6 +52,10 @@ public class SearchResultActivity extends AppCompatActivity {
         binding = ActivitySearchResultsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        // full screen
+        View decorView = getWindow().getDecorView();
+        decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
+
         String location = getIntent().getStringExtra("location");
         numOfAdults = getIntent().getIntExtra("adultsCount", 1);
         roomCount = getIntent().getIntExtra("roomCount", 1);
@@ -76,10 +80,12 @@ public class SearchResultActivity extends AppCompatActivity {
         String checkInFormatted = displayFormat.format(checkInDate);
         String checkOutFormatted = displayFormat.format(checkOutDate);
 
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle(location + " " + checkInFormatted + " - " + checkOutFormatted);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
+        // set title
+        binding.etSearch.setText(location + " " + checkInFormatted + " - " + checkOutFormatted);
+        binding.chipLocation.setText(location);
+        binding.chPcheckIn.setText(checkInFormatted);
+        binding.chPcheckOut.setText(checkOutFormatted);
+
         searchHotel();
     }
 
@@ -94,13 +100,15 @@ public class SearchResultActivity extends AppCompatActivity {
                 hotelList = result.getResult().getContent();
 
                 if (hotelList == null || hotelList.isEmpty()) {
-                    binding.textViewNoResults.setVisibility(View.VISIBLE);
-                    binding.searchResultsRecyclerView.setVisibility(View.GONE);
+                    binding.tvResultCount.setText("Không có khách sạn nào !");
+                    binding.tvNoResults.setVisibility(View.VISIBLE);
+                    binding.recyclerViewResults.setVisibility(View.GONE);
                 } else {
-                    binding.textViewNoResults.setVisibility(View.GONE);
-                    binding.searchResultsRecyclerView.setVisibility(View.VISIBLE);
+                    binding.tvResultCount.setText("Tìm kiếm được " + String.valueOf(result.getResult().getTotalElements()) +" có sẵn!");
+                    binding.tvNoResults.setVisibility(View.GONE);
+                    binding.recyclerViewResults.setVisibility(View.VISIBLE);
 
-                    binding.searchResultsRecyclerView.setLayoutManager(new LinearLayoutManager(SearchResultActivity.this));
+                    binding.recyclerViewResults.setLayoutManager(new LinearLayoutManager(SearchResultActivity.this));
                     hotelAdapter = new SearchHotelResultAdapter(hotelList, SearchResultActivity.this, new SearchHotelResultAdapter.OnHotelClickListener() {
                         @Override
                         public void onHotelClick(HotelResultResponse hotel) {
@@ -113,7 +121,7 @@ public class SearchResultActivity extends AppCompatActivity {
                             startActivity(intent);
                         }
                     });
-                    binding.searchResultsRecyclerView.setAdapter(hotelAdapter);
+                    binding.recyclerViewResults.setAdapter(hotelAdapter);
                 }
             }
 

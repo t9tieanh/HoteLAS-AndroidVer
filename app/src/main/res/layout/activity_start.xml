@@ -5,81 +5,114 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="16dp"
-        tools:context=".StartActivity">
+        android:layout_height="match_parent">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/continueEmail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="220dp"
-            android:layout_marginEnd="16dp"
-            android:text="Continue with email"
-            android:textAllCaps="false"
-            android:textColor="#FFFFFF"
-            app:backgroundTint="#E1A141"
-            app:cornerRadius="48dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+        <!-- Khung chứa ảnh bo tròn -->
+        <FrameLayout
+            android:id="@+id/frameBackground"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/bg_rounded_container"
+            android:clipToOutline="true"
             app:layout_constraintTop_toTopOf="parent"
-            app:strokeColor="#000000" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/loginFacebook"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="16dp"
-            android:text="Continue with Facebook"
-            android:drawableLeft="@drawable/facebookicon"
-            android:textAllCaps="false"
-            android:textColor="#000000"
-            app:cornerRadius="48dp"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/loginGoogle"
-            app:strokeColor="#8A8A8A" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/loginGoogle"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:drawableLeft="@drawable/googleicon"
-            android:text="Continue with Google"
-            android:textAlignment="center"
-            android:textAllCaps="false"
-            android:textColor="#000000"
-            app:cornerRadius="48dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/cardViewContent">
+
+            <!-- Ảnh nền -->
+            <ImageView
+                android:id="@+id/imageViewBackground"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/travel_backgroud" />
+        </FrameLayout>
+
+        <!-- CardView chứa nội dung -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardViewContent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            app:cardCornerRadius="24dp"
+            app:cardElevation="8dp"
+            app:layout_constraintTop_toBottomOf="@id/frameBackground"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/continueEmail"
-            app:strokeColor="#8A8A8A" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
 
-        <TextView
-            android:id="@+id/letsStart"
-            android:layout_width="198dp"
-            android:layout_height="56dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginBottom="72dp"
-            android:text="Let's start"
-            android:textAlignment="viewStart"
-            android:textColor="#000000"
-            android:textSize="34sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/continueEmail"
-            app:layout_constraintStart_toStartOf="parent" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="24dp">
 
+                <TextView
+                    android:id="@+id/textTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Hệ thống đặt phòng\nHotelAS"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/black" />
+
+                <TextView
+                    android:id="@+id/textDescription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Hotelas – Cùng bạn khám phá mọi miền đất nước, an tâm nghỉ dưỡng từng hành trình."
+                    android:textSize="16sp"
+                    android:textColor="@android:color/darker_gray" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/buttonExplore"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="Khám phá ngay"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp"
+                    app:backgroundTint="@color/orange"
+                    app:cornerRadius="48dp"
+                    app:icon="@drawable/arrow_start"
+                    app:iconGravity="textStart"
+                    app:iconPadding="8dp"
+                    app:iconSize="24dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/loginGmail"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Đăng nhập bằng tài khoản"
+                    android:textAlignment="center"
+                    android:textAllCaps="false"
+                    android:textColor="#000000"
+                    app:cornerRadius="48dp"
+                    app:icon="@drawable/ic_login"
+                    app:iconSize="24dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/loginGoogle"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Continue with Google"
+                    android:textAlignment="center"
+                    android:textAllCaps="false"
+                    android:textColor="#000000"
+                    app:cornerRadius="48dp"
+                    app:strokeColor="@color/orange"
+                    app:icon="@drawable/googleicon"
+                    app:iconSize="24dp" />
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 
 </layout>

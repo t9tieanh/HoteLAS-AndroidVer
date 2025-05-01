@@ -106,20 +106,4 @@ public class RegisterActivity extends AppCompatActivity {
                     .into(binding.avatarImageView);          // <-- Phải thay TextView avatar thành ImageView mới load được
         }
     }
-
-//    private MultipartBody.Part getUserImage () {
-//        // Lấy ảnh từ ImageView
-//        Bitmap bitmap = ImageUtils.getBitmapFromImageView(binding.avatarImageView);
-//
-//        // Chuyển Bitmap thành File
-//        File imgFile = null;
-//        try {
-//            imgFile = ImageUtils.bitmapToFile(bitmap, getApplicationContext());
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//        return ImageUtils.createImagePart(imgFile);
-//    }
-
 }

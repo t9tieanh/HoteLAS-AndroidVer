@@ -42,4 +42,47 @@ public class PrefManager {
     public boolean isLoggedIn() {
         return getAuthResponse() != null;
     }
+
+    public void updateAuthField(AuthField field, String newValue) {
+        AuthenticationResponse auth = getAuthResponse();
+        if (auth == null) return;
+
+        // gọi enum để apply
+        field.apply(auth, newValue);
+
+        // lưu lại
+        saveAuthResponse(auth);
+    }
+
+    public enum AuthField {
+        USERNAME {
+            @Override
+            public void apply(AuthenticationResponse resp, String value) {
+                resp.setUsername(value);
+            }
+        },
+        EMAIL {
+            @Override
+            public void apply(AuthenticationResponse resp, String value) {
+                resp.setEmail(value);
+            }
+        },
+        TOKEN {
+            @Override
+            public void apply(AuthenticationResponse resp, String value) {
+                resp.setAccessToken(value);
+            }
+        },
+        IMAGE {
+            @Override
+            public void apply(AuthenticationResponse resp, String value) {
+                resp.setImageUrl(value);
+            }
+        }
+
+        ;
+        /** Áp dụng value mới vào resp */
+        public abstract void apply(AuthenticationResponse resp, String value);
+    }
+
 }

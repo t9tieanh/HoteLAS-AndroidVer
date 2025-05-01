@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:fitsSystemWindows="true"
+    >
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:background="@android:color/white">
+
+        <!-- Avatar và Tên + Email -->
+
+        <ImageView
+            android:id="@+id/imgAvatar"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/circle_background"
+            android:scaleType="centerCrop"
+            android:src="@drawable/defaultprofileimage"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginStart="12dp"
+            app:layout_constraintStart_toEndOf="@id/imgAvatar"
+            app:layout_constraintTop_toTopOf="@id/imgAvatar"
+            app:layout_constraintBottom_toBottomOf="@id/imgAvatar">
+
+            <TextView
+                android:id="@+id/tvUserName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Your name"
+                android:textSize="16sp"
+                android:textColor="#000000"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/tvUserEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="yourname@gmail.com"
+                android:textSize="14sp"
+                android:textColor="#888888"/>
+        </LinearLayout>
+
+        <!-- Nút Logout -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnLogout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Logout"
+            android:textColor="@android:color/black"
+            android:backgroundTint="@android:color/white"
+            app:layout_constraintTop_toTopOf="@id/imgAvatar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/imgAvatar"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp" />
+
+        <!-- Icon close -->
+
+        <!-- Thông tin user -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layoutInfo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            app:layout_constraintTop_toBottomOf="@id/imgAvatar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <!-- Name -->
+            <TextView
+                android:id="@+id/tvLabelName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Name"
+                android:textColor="#888888"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <TextView
+                android:id="@+id/tvValueName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="your name"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBaseline_toBaselineOf="@id/tvLabelName"/>
+
+            <!-- Email -->
+            <TextView
+                android:id="@+id/tvLabelEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Email account"
+                android:textColor="#888888"
+                android:textSize="14sp"
+                android:layout_marginTop="24dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvLabelName"/>
+
+            <TextView
+                android:id="@+id/tvValueEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="yourname@gmail.com"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBaseline_toBaselineOf="@id/tvLabelEmail"/>
+
+            <!-- Mobile number -->
+            <TextView
+                android:id="@+id/tvLabelMobile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mobile number"
+                android:textColor="#888888"
+                android:textSize="14sp"
+                android:layout_marginTop="24dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvLabelEmail"/>
+
+            <TextView
+                android:id="@+id/tvValueMobile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add number"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBaseline_toBaselineOf="@id/tvLabelMobile"/>
+
+            <!-- Location -->
+            <TextView
+                android:id="@+id/tvLabelLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Location"
+                android:textColor="#888888"
+                android:textSize="14sp"
+                android:layout_marginTop="24dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvLabelMobile"/>
+
+            <TextView
+                android:id="@+id/tvValueLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="USA"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBaseline_toBaselineOf="@id/tvLabelLocation"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- Button Save Change -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSaveChange"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:backgroundTint="@color/orange"
+            android:paddingLeft="40dp"
+            android:paddingRight="40dp"
+            android:text="Chỉnh sửa thông tin"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            app:cornerRadius="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layoutInfo" />
+
+
+        <!-- Ngăn cách Jobs Done -->
+
+
+        <!-- Phần thống kê đặt phòng -->
+
+        <LinearLayout
+            android:id="@+id/sectionJobsDone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@+id/cardBookingStats"
+            app:layout_constraintTop_toBottomOf="@+id/btnSaveChange"
+            app:layout_constraintVertical_bias="0.277"
+            tools:layout_editor_absoluteX="0dp">
+
+            <!-- Tiêu đề -->
+            <TextView
+                android:id="@+id/tvJobsDoneTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="16dp"
+                android:text="Jobs done"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <!-- Các Job Item -->
+
+        </LinearLayout>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardBookingStats"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/red"
+            app:cardCornerRadius="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sectionJobsDone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/blue"
+                android:orientation="vertical"
+                android:padding="24dp">
+
+                <!-- Dòng 1: Loyalty + Jobs Completed -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvLoyaltyPoints"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="1200"
+                            android:textColor="@android:color/white"
+                            android:textSize="28sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Loyalty Points"
+                            android:textColor="@android:color/white"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvJobsCompleted"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="37"
+                            android:textColor="@android:color/white"
+                            android:textSize="28sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Jobs Completed"
+                            android:textColor="@android:color/white"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+                <!-- Dòng 2: Ongoing Jobs -->
+
+                <!-- Button View History -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnViewHistory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:backgroundTint="@color/md_theme_primary"
+                    android:text="Xem lịch sử đặt phòng"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    app:cornerRadius="16dp" />
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
