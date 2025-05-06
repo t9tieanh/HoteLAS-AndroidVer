@@ -161,7 +161,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:backgroundTint="@color/orange"
+                android:backgroundTint="@color/blue2"
                 android:paddingLeft="40dp"
                 android:paddingRight="40dp"
                 android:text="Chỉnh sửa thông tin"

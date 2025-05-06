@@ -3,6 +3,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,17 +15,24 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 
+import com.example.hotelas.adapter.ImagesViewPageAdapter;
 import com.example.hotelas.databinding.FragmentSearchBinding;
 import com.example.hotelas.dialog.GuestPickerDialog;
 import com.example.hotelas.dialog.LocationDialogActivity;
+import com.example.hotelas.model.common.Images;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.tabs.TabLayout;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
+
+import me.relex.circleindicator.CircleIndicator;
 
 public class SearchFragment extends Fragment implements GuestPickerDialog.GuestPickerListener {
 
@@ -36,6 +44,9 @@ public class SearchFragment extends Fragment implements GuestPickerDialog.GuestP
     private HorizontalScrollView domesticView;
     private HorizontalScrollView internationalView;
     private TabLayout tabLayout;
+    private ViewPager viewPager;
+    private CircleIndicator circleIndicator;
+    private List<Images> imagesList;
     private String checkInDate;
     private String checkOutDate;
     private int adultsCount = 0;
@@ -46,6 +57,18 @@ public class SearchFragment extends Fragment implements GuestPickerDialog.GuestP
     private int checkOutDay = 0;
     private int checkOutMonth = 0;
     private int checkOutYear = 0;
+
+    private Handler handler = new Handler();
+    private Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            if (viewPager.getCurrentItem() == imagesList.size() - 1) {
+                viewPager.setCurrentItem(0); // Quay lại trang đầu tiên nếu đang ở trang cuối
+            } else {
+                viewPager.setCurrentItem(viewPager.getCurrentItem() + 1); // Chuyển sang trang kế tiếp
+            }
+        }
+    };
 
     @Nullable
     @Override
@@ -119,11 +142,68 @@ public class SearchFragment extends Fragment implements GuestPickerDialog.GuestP
             }
         });
 
+        loadImage();
+
         loadTab(tabLayout);
         loadDomesticCard();
         loadInternationCard();
 
         loadDiscountPicture();
+    }
+
+    private void loadImage() {
+
+
+        viewPager = binding.viewpage;
+        circleIndicator = binding.circleIndicator;
+
+        imagesList = getListImages();
+        ImagesViewPageAdapter adapter = new ImagesViewPageAdapter(imagesList);
+        viewPager.setAdapter(adapter);
+
+        // Liên kết viewpager và indicator
+        circleIndicator.setViewPager(viewPager);
+
+        handler.postDelayed(runnable, 3000);
+
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                handler.removeCallbacks(runnable);
+                handler.postDelayed(runnable, 3000);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+            }
+        });
+
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        handler.removeCallbacks(runnable);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        handler.postDelayed(runnable, 3000); // delayMillis: 3000
+    }
+
+    private List<Images> getListImages() {
+        List<Images> list = new ArrayList<>();
+        list.add(new Images(R.drawable.banner01));
+        list.add(new Images(R.drawable.banner02));
+        list.add(new Images(R.drawable.banner03));
+        list.add(new Images(R.drawable.banner04));
+        return list;
     }
 
     private void loadDiscountPicture() {

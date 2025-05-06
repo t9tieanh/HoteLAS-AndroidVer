@@ -275,7 +275,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:text="Xem thêm"
-                    android:textColor="#E67E22"
+                    android:textColor="@color/blue2"
                     android:textSize="14sp"
                     android:textStyle="bold" />
 
@@ -415,7 +415,7 @@
                 android:text="Chọn Phòng"
                 android:textColor="#FFFFFF"
                 app:cornerRadius="32dp"
-                app:backgroundTint="#E67E22"
+                app:backgroundTint="@color/blue2"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
