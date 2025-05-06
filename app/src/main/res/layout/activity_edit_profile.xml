@@ -149,7 +149,11 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
+<<<<<<< HEAD
                     android:backgroundTint="@color/blue2"
+=======
+                    android:backgroundTint="@color/orange"
+>>>>>>> 2b45a518383eb23e77e2ed91b24ff4d12a82ccb3
                     android:text="Lưu thay đổi"
                     android:textAllCaps="false"
                     android:textColor="@android:color/white"

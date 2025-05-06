@@ -58,7 +58,11 @@ public class StartActivity extends AppCompatActivity {
         });
 
         // Gọi hàm setup chữ Hotelas màu
+<<<<<<< HEAD
 //        setUpHotelasTitle();
+=======
+        setUpHotelasTitle();
+>>>>>>> 2b45a518383eb23e77e2ed91b24ff4d12a82ccb3
     }
 
 

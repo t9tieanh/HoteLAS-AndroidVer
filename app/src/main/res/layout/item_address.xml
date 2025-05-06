@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+<<<<<<< HEAD
     android:layout_height="wrap_content"
     android:background="@android:color/white"
     android:padding="16dp">
 
     <!-- Tiêu đề địa chỉ -->
+=======
+    android:layout_height="wrap_content">
+
+>>>>>>> 2b45a518383eb23e77e2ed91b24ff4d12a82ccb3
     <TextView
         android:id="@+id/addressText"
         android:layout_width="0dp"

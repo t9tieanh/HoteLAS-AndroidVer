@@ -53,10 +53,13 @@
             android:exported="true">
         </activity>
         <activity
+<<<<<<< HEAD
             android:name=".ReservationHistoryActivity"
             android:exported="true">
         </activity>
         <activity
+=======
+>>>>>>> 2b45a518383eb23e77e2ed91b24ff4d12a82ccb3
             android:name=".PaymentActivity"
             android:exported="true">
             <intent-filter>
