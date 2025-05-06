@@ -7,6 +7,9 @@ import com.example.hotelas.model.response.ApiResponse;
 import com.example.hotelas.model.response.CreationResponse;
 import com.example.hotelas.model.response.reservation.InitialReservationResponse;
 import com.example.hotelas.model.response.reservation.ReservationStepResponse;
+import com.example.hotelas.model.response.reservation.history.ReservationHistoryResponse;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -27,4 +30,7 @@ public interface ReservationAPIService {
 
     @POST("reservation/update-info")
     Call<ApiResponse<CreationResponse>> updateCustomerInfoReservation(@Body UpdateReservationInfoRequest request);
+
+    @GET("reservation/history")
+    Call<ApiResponse<List<ReservationHistoryResponse>>> getReservationHistory();
 }

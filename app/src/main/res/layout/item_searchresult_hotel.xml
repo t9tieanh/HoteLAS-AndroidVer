@@ -1,106 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="8dp">
+    android:layout_margin="12dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="6dp"
+    android:background="@android:color/white">
 
-    <ImageView
-        android:id="@+id/hotelImageView"
-        android:layout_width="140dp"
-        android:layout_height="220dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/testhotel"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
-
-    <TextView
-        android:id="@+id/addressText"
-        android:layout_width="0dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hilton Hotel"
-        android:textColor="#000000"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@id/hotelImageView"
-        app:layout_constraintTop_toTopOf="@id/hotelImageView"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginStart="12dp" />
+        android:padding="12dp">
 
-    <TextView
-        android:id="@+id/regionNameTextView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:text="Konyaalti"
-        android:textColor="#000000"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/addressText"
-        app:layout_constraintTop_toBottomOf="@id/addressText" />
+        <!-- Ảnh khách sạn bo góc -->
+        <ImageView
+            android:id="@+id/hotelImageView"
+            android:layout_width="120dp"
+            android:layout_height="130dp"
+            android:background="@drawable/bg_image_radius"
+            android:clipToOutline="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/testhotel"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
-    <TextView
-        android:id="@+id/reviewScoreTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="8.6 / 10"
-        android:textColor="#000000"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="@id/addressText"
-        app:layout_constraintTop_toBottomOf="@id/regionNameTextView" />
+        <!-- Tên khách sạn -->
+        <TextView
+            android:id="@+id/addressText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:text="Hilton Hotel"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="@id/hotelImageView"
+            app:layout_constraintStart_toEndOf="@id/hotelImageView"
+            app:layout_constraintEnd_toEndOf="parent" />
 
-    <TextView
-        android:id="@+id/originalPriceTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="80"
-        android:textColor="#888888"
-        android:textSize="14sp"
-        app:layout_constraintTop_toBottomOf="@id/reviewScoreTextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="12dp" />
+        <!-- Vị trí -->
+        <TextView
+            android:id="@+id/regionNameTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Đà Nẵng, Việt Nam"
+            android:textColor="#555555"
+            android:textSize="14sp"
+            app:layout_constraintTop_toBottomOf="@id/addressText"
+            app:layout_constraintStart_toStartOf="@id/addressText"
+            app:layout_constraintEnd_toEndOf="parent" />
 
-    <TextView
-        android:id="@+id/priceInfoTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="50"
-        android:textColor="#000000"
-        android:textSize="28sp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/originalPriceTextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="12dp" />
+        <!-- Layout chứa đánh giá và giá, căn bắt đầu từ sau ảnh -->
+        <LinearLayout
+            android:id="@+id/ratingPriceLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/regionNameTextView"
+            app:layout_constraintStart_toEndOf="@id/hotelImageView"
+            android:layout_marginStart="12dp"
+            app:layout_constraintEnd_toEndOf="parent">
 
-    <TextView
-        android:id="@+id/priceInfo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Price for 1 day"
-        android:textColor="#000000"
-        android:textSize="14sp"
-        app:layout_constraintTop_toBottomOf="@id/priceInfoTextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="2dp"
-        android:layout_marginEnd="12dp" />
+            <!-- Phần bên trái: icon và điểm đánh giá -->
+            <LinearLayout
+                android:id="@+id/ratingLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-    <ImageButton
-        android:id="@+id/icon_rating"
-        android:layout_width="25dp"
-        android:layout_height="21dp"
-        android:layout_marginTop="32dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="Star rating"
-        android:scaleType="centerInside"
-        android:src="@drawable/icon_button_favorite"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.044"
-        app:layout_constraintStart_toEndOf="@+id/reviewScoreTextView"
-        app:layout_constraintTop_toBottomOf="@+id/regionNameTextView" />
+                <ImageButton
+                    android:id="@+id/icon_rating"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Rating"
+                    android:src="@drawable/icon_button_favorite" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/reviewScoreTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:text="8.6 / 10"
+                    android:textColor="#000000"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <!-- Phần bên phải: cụm giá -->
+            <LinearLayout
+                android:id="@+id/priceLayout"
+                android:layout_width="153dp"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/originalPriceTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="800.000₫"
+                    android:textColor="#999999"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/priceInfoTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="599.000₫"
+                    android:textColor="#E1A141"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/priceInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="Giá cho 1 đêm"
+                    android:textColor="#777777"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

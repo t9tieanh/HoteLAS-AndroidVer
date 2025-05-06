@@ -21,90 +21,105 @@
                 android:layout_height="wrap_content"
                 tools:context=".SearchFragment">
 
-                <ImageView
-                    android:id="@+id/bannerImage"
+                <LinearLayout
+                    android:id="@+id/imageContainer"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:adjustViewBounds="true"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/banner"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/locationButton"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="55dp"
-                    android:layout_marginStart="10dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
                     android:layout_marginTop="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:drawableLeft="@drawable/icon_location"
-                    android:text="Place to go"
-                    android:textAlignment="textStart"
-                    android:textAllCaps="false"
-                    android:textColor="#000000"
-                    app:cornerRadius="24dp"
-                    app:strokeColor="#8A8A8A"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/bannerImage" />
+                    android:padding="0dp"
+                    android:background="@color/white"
+                    android:gravity="center_horizontal"
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    tools:ignore="MissingConstraints">
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/datepickerButton"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="55dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:drawableLeft="@drawable/icon_date"
-                    android:text="Select dates"
-                    android:textAlignment="textStart"
-                    android:textAllCaps="false"
-                    android:textColor="#000000"
-                    app:cornerRadius="24dp"
-                    app:strokeColor="#8A8A8A"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/locationButton" />
+                    <androidx.viewpager.widget.ViewPager
+                        android:id="@+id/viewpage"
+                        android:layout_width="match_parent"
+                        android:layout_height="250dp" />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/guestpickerButton"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="55dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginEnd="10dp"
-                    android:drawableLeft="@drawable/icon_person"
-                    android:text="Guests"
-                    android:textAlignment="textStart"
-                    android:textAllCaps="false"
-                    android:textColor="#000000"
-                    app:cornerRadius="24dp"
-                    app:strokeColor="#8A8A8A"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/datepickerButton" />
+                    <me.relex.circleindicator.CircleIndicator
+                        android:id="@+id/circle_indicator"
+                        android:layout_width="200dp"
+                        android:layout_height="30dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_gravity="center"
+                        app:ci_drawable="@drawable/circle_selected"
+                        app:ci_drawable_unselected="@drawable/circle_unselected" />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/searchButton"
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/buttonContainer"
                     android:layout_width="match_parent"
-                    android:layout_height="55dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginEnd="10dp"
-                    android:text="Search"
-                    android:textAllCaps="false"
-                    android:textColor="#FFFFFF"
-                    app:backgroundTint="#E1A141"
-                    app:cornerRadius="48dp"
-                    app:strokeColor="#000000"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:orientation="vertical"
+                    android:background="@drawable/bg_button_container"
+                    android:padding="10dp"
+                    android:clipToPadding="false"
+                    android:elevation="4dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/guestpickerButton" />
+                    app:layout_constraintTop_toBottomOf="@id/imageContainer">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/locationButton"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="55dp"
+                        android:drawableLeft="@drawable/location_ic"
+                        android:text="Chọn địa điểm"
+                        android:textAlignment="textStart"
+                        android:textAllCaps="false"
+                        android:textColor="#000000"
+                        app:cornerRadius="24dp"
+                        app:strokeColor="#8A8A8A" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/datepickerButton"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="55dp"
+                        android:layout_marginTop="10dp"
+                        android:drawableLeft="@drawable/schedule_ic"
+                        android:text="Chọn ngày"
+                        android:textAlignment="textStart"
+                        android:textAllCaps="false"
+                        android:textColor="#000000"
+                        app:cornerRadius="24dp"
+                        app:strokeColor="#8A8A8A" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/guestpickerButton"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="55dp"
+                        android:layout_marginTop="5dp"
+                        android:drawableLeft="@drawable/user_ic"
+                        android:text="Số khách"
+                        android:textAlignment="textStart"
+                        android:textAllCaps="false"
+                        android:textColor="#000000"
+                        app:cornerRadius="24dp"
+                        app:strokeColor="#8A8A8A" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/searchButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="55dp"
+                        android:layout_marginTop="15dp"
+                        android:text="Tìm kiếm"
+                        android:textAllCaps="false"
+                        android:textColor="#FFFFFF"
+                        app:backgroundTint="@color/blue2"
+                        app:cornerRadius="48dp"
+                        app:strokeColor="#000000" />
+
+                </LinearLayout>
+
 
                 <include
                     android:id="@+id/hotDealFragment"
@@ -114,7 +129,7 @@
                     android:layout_marginTop="16dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/searchButton" />
+                    app:layout_constraintTop_toBottomOf="@id/buttonContainer" />
 
                 <include
                     android:id="@+id/discountFragment"

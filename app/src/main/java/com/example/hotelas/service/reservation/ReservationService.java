@@ -7,7 +7,10 @@ import com.example.hotelas.model.response.ApiResponse;
 import com.example.hotelas.model.response.CreationResponse;
 import com.example.hotelas.model.response.reservation.InitialReservationResponse;
 import com.example.hotelas.model.response.reservation.ReservationStepResponse;
+import com.example.hotelas.model.response.reservation.history.ReservationHistoryResponse;
 import com.example.hotelas.service.callback.ServiceExecutor;
+
+import java.util.List;
 
 import retrofit2.Call;
 
@@ -40,6 +43,15 @@ public class ReservationService {
             ServiceExecutor.CallBack<CreationResponse> callback
     ) {
         Call<ApiResponse<CreationResponse>> call = apiService.updateCustomerInfoReservation(request);
+        ServiceExecutor.enqueue(call, callback);
+    }
+
+
+    // lấy lịch sử đặt phòng
+    public void getReservationHistory (
+            ServiceExecutor.CallBack<List<ReservationHistoryResponse>> callback
+    ) {
+        Call<ApiResponse<List<ReservationHistoryResponse>>> call = apiService.getReservationHistory();
         ServiceExecutor.enqueue(call, callback);
     }
 }

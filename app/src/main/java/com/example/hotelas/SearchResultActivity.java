@@ -128,7 +128,6 @@ public class SearchResultActivity extends AppCompatActivity {
             @Override
             public void onFailure(String errorMessage) {
                 binding.progressBar.setVisibility(View.GONE);
-
             }
         });
     }

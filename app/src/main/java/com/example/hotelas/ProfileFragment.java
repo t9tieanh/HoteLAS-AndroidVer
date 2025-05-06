@@ -54,7 +54,9 @@ public class ProfileFragment extends Fragment {
         });
         // Nút "Xem lịch sử đặt phòng"
         binding.btnViewHistory.setOnClickListener(v -> {
-            // navigate tới lịch sử...
+            // transfer activity lịch sử đặt phòng
+            Intent intent = new Intent(requireContext(), ReservationHistoryActivity.class);
+            startActivity(intent);
         });
 
         binding.btnLogout.setOnClickListener( v -> logout());
