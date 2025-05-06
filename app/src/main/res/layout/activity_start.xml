@@ -14,7 +14,6 @@
             android:layout_height="0dp"
             android:background="@drawable/bg_rounded_container"
             android:clipToOutline="true"
-<<<<<<< HEAD
             app:layout_constraintBottom_toTopOf="@id/cardViewContent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -78,49 +77,6 @@
                         android:src="@drawable/logo" />
                 </LinearLayout>
 
-=======
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/cardViewContent">
-
-            <!-- Ảnh nền -->
-            <ImageView
-                android:id="@+id/imageViewBackground"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:src="@drawable/travel_backgroud" />
-        </FrameLayout>
-
-        <!-- CardView chứa nội dung -->
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardViewContent"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            app:cardCornerRadius="24dp"
-            app:cardElevation="8dp"
-            app:layout_constraintTop_toBottomOf="@id/frameBackground"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="24dp">
-
-                <TextView
-                    android:id="@+id/textTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Hệ thống đặt phòng\nHotelAS"
-                    android:textSize="24sp"
-                    android:textStyle="bold"
-                    android:textColor="@android:color/black" />
->>>>>>> 2b45a518383eb23e77e2ed91b24ff4d12a82ccb3
 
                 <TextView
                     android:id="@+id/textDescription"
@@ -128,27 +84,17 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:text="Hotelas – Cùng bạn khám phá mọi miền đất nước, an tâm nghỉ dưỡng từng hành trình."
-<<<<<<< HEAD
                     android:textColor="@android:color/darker_gray"
                     android:textSize="16sp" />
-=======
-                    android:textSize="16sp"
-                    android:textColor="@android:color/darker_gray" />
->>>>>>> 2b45a518383eb23e77e2ed91b24ff4d12a82ccb3
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/buttonExplore"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-<<<<<<< HEAD
-=======
-                    android:layout_marginTop="24dp"
->>>>>>> 2b45a518383eb23e77e2ed91b24ff4d12a82ccb3
                     android:text="Khám phá ngay"
                     android:textAllCaps="false"
                     android:textColor="#FFFFFF"
                     android:textSize="16sp"
-<<<<<<< HEAD
                     android:paddingVertical="12dp"
                     app:backgroundTint="@color/blue2"
                     app:cornerRadius="50dp"
@@ -162,59 +108,36 @@
                     android:elevation="4dp"
                     android:layout_gravity="center" />
 
-=======
-                    app:backgroundTint="@color/orange"
-                    app:cornerRadius="48dp"
-                    app:icon="@drawable/arrow_start"
-                    app:iconGravity="textStart"
-                    app:iconPadding="8dp"
-                    app:iconSize="24dp" />
->>>>>>> 2b45a518383eb23e77e2ed91b24ff4d12a82ccb3
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/loginGmail"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-<<<<<<< HEAD
                     android:layout_marginTop="5dp"
-=======
-                    android:layout_marginTop="16dp"
->>>>>>> 2b45a518383eb23e77e2ed91b24ff4d12a82ccb3
                     android:text="Đăng nhập bằng tài khoản"
                     android:textAlignment="center"
                     android:textAllCaps="false"
                     android:textColor="#000000"
                     app:cornerRadius="48dp"
-<<<<<<< HEAD
                     android:textSize="16dp"
                     app:iconSize="24dp"
                     android:backgroundTint="@android:color/white"
                     app:rippleColor="@color/blue2"
                     android:elevation="4dp" />
-=======
-                    app:icon="@drawable/ic_login"
-                    app:iconSize="24dp" />
->>>>>>> 2b45a518383eb23e77e2ed91b24ff4d12a82ccb3
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/loginGoogle"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-<<<<<<< HEAD
                     android:layout_marginTop="5dp"
                     android:text="Đăng nhập với Google"
                     android:textSize="16dp"
-=======
-                    android:layout_marginTop="16dp"
-                    android:text="Continue with Google"
->>>>>>> 2b45a518383eb23e77e2ed91b24ff4d12a82ccb3
                     android:textAlignment="center"
                     android:textAllCaps="false"
                     android:textColor="#000000"
                     app:cornerRadius="48dp"
-<<<<<<< HEAD
                     app:icon="@drawable/ic_google_logo"
                     app:iconSize="24dp"
                     android:backgroundTint="@android:color/white"
@@ -223,11 +146,6 @@
                     app:iconTint="@null" />
 
 
-=======
-                    app:strokeColor="@color/orange"
-                    app:icon="@drawable/googleicon"
-                    app:iconSize="24dp" />
->>>>>>> 2b45a518383eb23e77e2ed91b24ff4d12a82ccb3
             </LinearLayout>
 
         </com.google.android.material.card.MaterialCardView>

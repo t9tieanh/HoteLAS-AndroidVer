@@ -275,11 +275,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:text="Xem thêm"
-<<<<<<< HEAD
                     android:textColor="@color/blue2"
-=======
-                    android:textColor="#E67E22"
->>>>>>> 2b45a518383eb23e77e2ed91b24ff4d12a82ccb3
                     android:textSize="14sp"
                     android:textStyle="bold" />
 

@@ -58,11 +58,7 @@ public class StartActivity extends AppCompatActivity {
         });
 
         // Gọi hàm setup chữ Hotelas màu
-<<<<<<< HEAD
 //        setUpHotelasTitle();
-=======
-        setUpHotelasTitle();
->>>>>>> 2b45a518383eb23e77e2ed91b24ff4d12a82ccb3
     }
 
 
@@ -104,7 +100,7 @@ public class StartActivity extends AppCompatActivity {
                                 // lưu thông tin đăng nhập
                                 PrefManager prefManager = new PrefManager(StartActivity.this);
                                 prefManager.saveAuthResponse(AuthenticationResponse.builder()
-                                                .accessToken(result.getResult().getAccessToken())
+                                        .accessToken(result.getResult().getAccessToken())
                                         .build());
 
                                 Intent intent = new Intent(StartActivity.this, RegisterActivity.class);
