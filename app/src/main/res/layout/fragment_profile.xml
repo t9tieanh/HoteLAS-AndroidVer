@@ -65,14 +65,14 @@
                 android:id="@+id/btnLogout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Logout"
-                android:textColor="@android:color/black"
                 android:backgroundTint="@android:color/white"
-                app:layout_constraintTop_toTopOf="@id/imgAvatar"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="@id/imgAvatar"
                 android:paddingStart="16dp"
-                android:paddingEnd="16dp" />
+                android:paddingEnd="16dp"
+                android:text="Đăng xuất"
+                android:textColor="@android:color/black"
+                app:layout_constraintBottom_toBottomOf="@id/imgAvatar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/imgAvatar" />
 
             <!-- Icon close -->
 
@@ -91,11 +91,11 @@
                     android:id="@+id/tvLabelName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Name"
+                    android:text="Tên đầy đủ"
                     android:textColor="#888888"
                     android:textSize="14sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/tvValueName"
@@ -112,12 +112,12 @@
                     android:id="@+id/tvLabelEmail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Email account"
+                    android:layout_marginTop="24dp"
+                    android:text="Email"
                     android:textColor="#888888"
                     android:textSize="14sp"
-                    android:layout_marginTop="24dp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvLabelName"/>
+                    app:layout_constraintTop_toBottomOf="@id/tvLabelName" />
 
                 <TextView
                     android:id="@+id/tvValueEmail"
@@ -134,12 +134,12 @@
                     android:id="@+id/tvLabelMobile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Mobile number"
+                    android:layout_marginTop="24dp"
+                    android:text="Số điện thoại"
                     android:textColor="#888888"
                     android:textSize="14sp"
-                    android:layout_marginTop="24dp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvLabelEmail"/>
+                    app:layout_constraintTop_toBottomOf="@id/tvLabelEmail" />
 
                 <TextView
                     android:id="@+id/tvValueMobile"
@@ -152,16 +152,6 @@
                     app:layout_constraintBaseline_toBaselineOf="@id/tvLabelMobile"/>
 
                 <!-- Location -->
-                <TextView
-                    android:id="@+id/tvLabelLocation"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Location"
-                    android:textColor="#888888"
-                    android:textSize="14sp"
-                    android:layout_marginTop="24dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvLabelMobile"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -266,6 +256,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="end"
+                            android:layout_marginLeft="20dp"
                             android:orientation="vertical">
 
                             <TextView

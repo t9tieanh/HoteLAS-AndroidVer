@@ -1,104 +1,138 @@
-<?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    >
+    android:padding="16dp">
 
+    <!-- Ảnh khách sạn -->
     <ImageView
         android:id="@+id/hotelImageView"
-        android:layout_width="143dp"
-        android:layout_height="250dp"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginEnd="12dp"
         android:scaleType="centerCrop"
         android:src="@drawable/testhotel"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- Tên khách sạn -->
     <TextView
-        android:id="@+id/addressText"
-        android:layout_width="185dp"
+        android:id="@+id/hotelNameTextView"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="14dp"
-        android:text="Hilton Hotel"
+        android:layout_marginLeft="20dp"
+        android:text="Aurora Palace"
         android:textColor="#000000"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/hotelImageView"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/reviewScoreTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="5dp"
-        android:text="8.6 / 10"
-        android:textColor="#000000"
-        android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@+id/hotelImageView"
-        app:layout_constraintTop_toBottomOf="@+id/regionNameTextView" />
-
-    <TextView
-        android:id="@+id/totalReviewsTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp"
-        android:text="(total 198)"
-        android:textColor="#000000"
-        android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@+id/reviewScoreTextView"
-        app:layout_constraintTop_toBottomOf="@+id/regionNameTextView" />
-
-
-    <TextView
-        android:id="@+id/regionNameTextView"
-        android:layout_width="184dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="50dp"
-        android:text="Konyaalti"
-        android:textColor="#000000"
-        android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@+id/hotelImageView"
-        app:layout_constraintTop_toTopOf="@+id/addressText" />
-
-    <TextView
-        android:id="@+id/priceInfoTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        android:layout_marginEnd="28dp"
-        android:text="50"
-        android:textColor="#000000"
-        android:textSize="35sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/regionNameTextView" />
+        app:layout_constraintStart_toEndOf="@id/hotelImageView"
+        app:layout_constraintTop_toTopOf="@id/hotelImageView" />
 
-    <Button
-        android:id="@+id/cancelReservationButton"
-        android:layout_width="199dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="192dp"
-        android:text="Cancel Reservation"
-        android:textAllCaps="false"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
+    <!-- Địa chỉ -->
     <TextView
-        android:id="@+id/priceInfo"
-        android:layout_width="160dp"
-        android:layout_height="60dp"
-        android:layout_marginEnd="96dp"
-        android:layout_marginBottom="52dp"
-        android:text="Price for 1 days"
-        android:textColor="#000000"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:id="@+id/addressTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Địa chỉ: 45 Đ. Nguyễn Tất Thành, Phú Thuận, Quận 7, Hồ Chí Minh"
+        android:textSize="14sp"
+        android:textColor="#555555"
+        app:layout_constraintTop_toBottomOf="@id/hotelNameTextView"
+        app:layout_constraintStart_toStartOf="@id/hotelNameTextView"
+        app:layout_constraintEnd_toEndOf="@id/hotelNameTextView" />
 
+    <!-- Dịch vụ -->
+    <LinearLayout
+        android:id="@+id/serviceLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="4dp"
+        app:layout_constraintTop_toBottomOf="@id/addressTextView"
+        app:layout_constraintStart_toStartOf="@id/addressTextView"
+        app:layout_constraintEnd_toEndOf="@id/addressTextView">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/bg_blue_label"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="4dp"
+            android:text="Ăn sáng"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:background="@drawable/bg_green_label"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="4dp"
+            android:text="Đưa đón sân bay"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+    <!-- Loại phòng -->
+    <TextView
+        android:id="@+id/roomTypeTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Loại phòng: Basic Room"
+        android:textSize="14sp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintTop_toBottomOf="@id/serviceLayout"
+        app:layout_constraintStart_toStartOf="@id/serviceLayout"
+        app:layout_constraintEnd_toEndOf="@id/serviceLayout" />
+
+    <!-- Tổng tiền -->
+    <TextView
+        android:id="@+id/totalTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Tổng tiền: 1000 VNĐ"
+        android:textSize="14sp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintTop_toBottomOf="@id/roomTypeTextView"
+        app:layout_constraintStart_toStartOf="@id/roomTypeTextView"
+        app:layout_constraintEnd_toEndOf="@id/roomTypeTextView" />
+
+    <!-- Ngày đặt -->
+    <TextView
+        android:id="@+id/bookingDateTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Ngày đặt: 2025-04-28"
+        android:textSize="14sp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintTop_toBottomOf="@id/totalTextView"
+        app:layout_constraintStart_toStartOf="@id/totalTextView"
+        app:layout_constraintEnd_toEndOf="@id/totalTextView" />
+
+    <!-- Ngày nhận phòng -->
+    <TextView
+        android:id="@+id/checkinDateTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Ngày nhận phòng: 2025-04-24"
+        android:textSize="14sp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintTop_toBottomOf="@id/bookingDateTextView"
+        app:layout_constraintStart_toStartOf="@id/bookingDateTextView"
+        app:layout_constraintEnd_toEndOf="@id/bookingDateTextView" />
+
+    <!-- Ngày trả phòng -->
+    <TextView
+        android:id="@+id/checkoutDateTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Ngày trả phòng: 2025-04-25"
+        android:textSize="14sp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintTop_toBottomOf="@id/checkinDateTextView"
+        app:layout_constraintStart_toStartOf="@id/checkinDateTextView"
+        app:layout_constraintEnd_toEndOf="@id/checkinDateTextView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
