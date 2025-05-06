@@ -58,7 +58,6 @@ public class SearchHotelResultAdapter extends RecyclerView.Adapter<SearchHotelRe
         holder.reviewScoreTextView.setText(hotel.getRating() + " / 10");
         holder.originalPriceTextView.setText(String.valueOf(hotel.getOriginalPrice()));
         holder.priceInfoTextView.setText(String.valueOf(hotel.getMinRoomPrice()));
-        holder.priceInfo.setText("Price for 1 day");
 
         // Load ảnh
         if (hotel.getAvatar() != null && !hotel.getAvatar().isEmpty()) {

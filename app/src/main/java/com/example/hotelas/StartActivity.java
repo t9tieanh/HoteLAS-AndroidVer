@@ -58,7 +58,7 @@ public class StartActivity extends AppCompatActivity {
         });
 
         // Gọi hàm setup chữ Hotelas màu
-        setUpHotelasTitle();
+//        setUpHotelasTitle();
     }
 
 
@@ -94,13 +94,13 @@ public class StartActivity extends AppCompatActivity {
                             else {
                                 // đăng nhập thành công
                                 Toast.makeText(StartActivity.this,
-                                        "Chào mừng bạn đến với hệ thống đặt phòng HotelAS!",
+                                        "Chào mừng bạn đến với hệ thống đặt phòng Hotelas!",
                                         Toast.LENGTH_SHORT).show();
 
                                 // lưu thông tin đăng nhập
                                 PrefManager prefManager = new PrefManager(StartActivity.this);
                                 prefManager.saveAuthResponse(AuthenticationResponse.builder()
-                                                .accessToken(result.getResult().getAccessToken())
+                                        .accessToken(result.getResult().getAccessToken())
                                         .build());
 
                                 Intent intent = new Intent(StartActivity.this, RegisterActivity.class);

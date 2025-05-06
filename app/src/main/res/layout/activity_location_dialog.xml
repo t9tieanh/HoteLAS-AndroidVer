@@ -21,7 +21,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/white"
-                android:hint="Enter location"
+                android:hint="Chọn địa điểm"
+                android:textSize="20sp"
+                android:textStyle="bold"
                 android:inputType="text"
                 android:maxLines="1" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -41,13 +43,20 @@
         <Button
             android:id="@+id/saveButton"
             android:layout_width="130dp"
-            android:layout_height="0dp"
+            android:layout_height="48dp"
             android:layout_marginBottom="16dp"
-            android:text="Save"
-            android:textSize="12sp"
+            android:text="Lưu"
+            android:textSize="14sp"
+            android:textColor="#FFFFFF"
+            android:fontFamily="sans-serif-medium"
+            android:backgroundTint="#1A73E8"
+            android:elevation="4dp"
+            android:letterSpacing="0.05"
+            app:cornerRadius="24dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="1.0" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
