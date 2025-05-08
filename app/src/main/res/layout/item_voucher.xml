@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_card_gradient"
+    android:layout_margin="8dp"
+    android:padding="12dp">
+
+    <!-- Logo (tạm thời cứng, bạn có thể thay bằng dynamic sau) -->
+    <ImageView
+        android:id="@+id/imgLogo"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/ic_discount"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Tên mã giảm giá -->
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Summer Deal"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:textColor="@android:color/black"
+        android:layout_marginStart="8dp"
+        app:layout_constraintStart_toEndOf="@id/imgLogo"
+        app:layout_constraintTop_toTopOf="@id/imgLogo"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Phần trăm giảm -->
+    <TextView
+        android:id="@+id/tvDiscount"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="25% OFF"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/holo_red_dark"
+        app:layout_constraintStart_toStartOf="@id/tvName"
+        app:layout_constraintTop_toBottomOf="@id/tvName"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="4dp"/>
+
+    <!-- Ngày còn lại -->
+    <TextView
+        android:id="@+id/tvRemaining"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="3 days remaining"
+        android:textSize="12sp"
+        android:textColor="@android:color/holo_red_dark"
+        app:layout_constraintStart_toStartOf="@id/tvDiscount"
+        app:layout_constraintTop_toBottomOf="@id/tvDiscount"
+        android:layout_marginTop="4dp"/>
+
+    <!-- Điều kiện áp dụng -->
+    <TextView
+        android:id="@+id/tvCondition"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Min Booking: $100 • Max: $30"
+        android:textSize="12sp"
+        android:textColor="#666666"
+        app:layout_constraintStart_toStartOf="@id/tvRemaining"
+        app:layout_constraintTop_toBottomOf="@id/tvRemaining"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="4dp" />
+
+    <!-- Checkbox bên phải -->
+    <CheckBox
+        android:id="@+id/checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Apply"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@id/tvCondition"
+        app:layout_constraintTop_toTopOf="@id/tvCondition"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="12dp"
+        android:gravity="center_vertical" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <!-- AppBar với Toolbar -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="#ffffff"
+            app:titleTextColor="@android:color/black"
+            android:elevation="4dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <!-- Tên khách sạn -->
+                <TextView
+                    android:id="@+id/tvHotelName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:text="Hotelas"
+                    android:textColor="#2196F3"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <!-- Dòng chữ "Hãy áp dụng mã giảm giá" -->
+                <TextView
+                    android:id="@+id/tvDiscountMessage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvHotelName"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="5dp"
+                    android:text="Hãy áp dụng mã giảm giá"
+                    android:textColor="#000000"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+
+        </com.google.android.material.appbar.MaterialToolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <!-- Thông báo mã miễn phí vận chuyển -->
+    <TextView
+        android:id="@+id/tvFreeShipping"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Mã Miễn Phí Vận Chuyển"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginTop="16dp" />
+
+    <!-- Hướng dẫn chọn voucher -->
+    <TextView
+        android:id="@+id/tvVoucherDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Có thể chọn 1 Voucher"
+        android:textSize="14sp"
+        android:layout_marginTop="4dp" />
+
+    <!-- RecyclerView cho danh sách Voucher -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/voucherRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:layout_weight="1" /> <!-- RecyclerView chiếm không gian còn lại -->
+
+    <!-- Hệ thống đặt phòng -->
+    <TextView
+        android:id="@+id/tvBookingSystem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Hệ thống đặt phòng @Hotelas"
+        android:textSize="14sp"
+        android:layout_marginTop="16dp"
+        android:textColor="@android:color/holo_orange_dark" />
+
+    <!-- Button Áp dụng ngay -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnApplyVoucher"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Áp dụng ngay"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:paddingVertical="12dp"
+        app:backgroundTint="@color/blue2"
+        app:cornerRadius="50dp"
+        app:icon="@drawable/arrow_start"
+        app:iconGravity="textStart"
+        app:iconPadding="12dp"
+        app:iconSize="24dp"
+        app:rippleColor="@color/blue"
+        app:strokeColor="@android:color/white"
+        app:strokeWidth="2dp"
+        android:elevation="4dp"
+        android:layout_gravity="center" />
+
+</LinearLayout>
+
+</layout>

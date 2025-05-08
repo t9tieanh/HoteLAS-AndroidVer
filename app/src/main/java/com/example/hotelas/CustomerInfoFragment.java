@@ -1,5 +1,7 @@
 package com.example.hotelas;
 
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.LayoutInflater;
@@ -7,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -14,6 +17,7 @@ import com.example.hotelas.adapter.AppliedDiscountAdapter;
 import com.example.hotelas.config.PrefManager;
 import com.example.hotelas.databinding.FragmentCustomerInfoBinding;
 import com.example.hotelas.model.common.DiscountDTO;
+import com.example.hotelas.model.common.DiscountDTOForDiscountActivity;
 import com.example.hotelas.model.request.reservation.updateinfo.UpdateReservationInfoRequest;
 import com.example.hotelas.model.response.ApiResponse;
 import com.example.hotelas.model.response.CreationResponse;
@@ -32,6 +36,10 @@ public class CustomerInfoFragment extends Fragment implements PaymentActivity.On
     private ReservationService reservationService;
     private CustomerResponseDTO customerInfo;
 
+    private PrefManager prefManager;
+
+    private List<DiscountDTO> appliedDiscounts;
+
     String reservationId;
 
 
@@ -44,30 +52,46 @@ public class CustomerInfoFragment extends Fragment implements PaymentActivity.On
         View view = binding.getRoot();
 
         reservationId = ((PaymentActivity) requireActivity()).reservationId;
+        prefManager = new PrefManager(requireContext());
+
+        reservationService = new ReservationService(prefManager.getAuthResponse().getAccessToken());
+        userService = new UserService(prefManager.getAuthResponse().getAccessToken());
+
+
+        // lấy dữ liêệu người dùng va ma giam gia
+        setCustomerInfo();
+        setDiscounts();
 
         // Setup RecyclerView
         binding.appliedDiscountRecycler.setLayoutManager(new LinearLayoutManager(requireContext()));
 
-        List<DiscountDTO> appliedDiscounts = new ArrayList<>();
-        appliedDiscounts.add(
-                DiscountDTO.builder()
-                        .name("Summer Sale")
-                        .code("SUMMER20")
-                        .build()
-        );
+        // setup applayDiscount btn
+        binding.applyDiscountBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(requireContext(), DiscountActivity.class);
+                intent.putExtra("discounts",
+                        new ArrayList<>(((PaymentActivity) requireActivity()).reservationStepResponse.getDiscounts()));
+                intent.putExtra("reservationId", ((PaymentActivity) requireActivity()).reservationId);
 
-        AppliedDiscountAdapter adapter = new AppliedDiscountAdapter(appliedDiscounts);
-        binding.appliedDiscountRecycler.setAdapter(adapter);
-
-        setCustomerInfo();
+                startActivity(intent);
+            }
+        });
 
         return view;
     }
 
-    private void setCustomerInfo() {
-        String token = new PrefManager(requireContext()).getAuthResponse().getAccessToken();
-        userService = new UserService(token);
+    @Override
+    public void onResume() {
+        super.onResume();
 
+        ((PaymentActivity)requireActivity()).getReservationInfo();
+
+        setDiscounts();
+        setCustomerInfo();
+    }
+
+    private void setCustomerInfo() {
         userService.getCustomerProfile(new ServiceExecutor.CallBack<CustomerResponseDTO>() {
             @Override
             public void onSuccess(ApiResponse<CustomerResponseDTO> result) {
@@ -81,6 +105,23 @@ public class CustomerInfoFragment extends Fragment implements PaymentActivity.On
             @Override
             public void onFailure(String errorMessage) {
                 Toast.makeText(requireContext(), "Lỗi: " + errorMessage, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void setDiscounts () {
+        reservationService.getAppliedDiscounts(reservationId, new ServiceExecutor.CallBack<List<DiscountDTO>>() {
+            @Override
+            public void onSuccess(ApiResponse<List<DiscountDTO>> result) {
+                appliedDiscounts = result.getResult();
+
+                AppliedDiscountAdapter adapter = new AppliedDiscountAdapter(appliedDiscounts);
+                binding.appliedDiscountRecycler.setAdapter(adapter);
+            }
+
+            @Override
+            public void onFailure(String errorMessage) {
+                Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show();
             }
         });
     }

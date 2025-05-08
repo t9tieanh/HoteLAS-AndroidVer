@@ -1,5 +1,6 @@
 package com.example.hotelas.service.reservation;
 
+import com.example.hotelas.model.common.DiscountDTO;
 import com.example.hotelas.model.common.PaymentDTO;
 import com.example.hotelas.model.request.reservation.initial.InitialReservationRequest;
 import com.example.hotelas.model.request.reservation.updateinfo.UpdateReservationInfoRequest;
@@ -15,6 +16,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface ReservationAPIService {
@@ -33,4 +35,9 @@ public interface ReservationAPIService {
 
     @GET("reservation/history")
     Call<ApiResponse<List<ReservationHistoryResponse>>> getReservationHistory();
+
+    @GET("reservation/applied-discounts/{id}")
+    Call<ApiResponse<List<DiscountDTO>>> getAppliedDiscounts(
+            @Path("id") String reservationId
+    );
 }
