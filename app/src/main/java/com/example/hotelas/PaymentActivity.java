@@ -34,6 +34,7 @@ import com.example.hotelas.databinding.ActivityPaymentBinding;
 import com.example.hotelas.model.common.AddressDTO;
 import com.example.hotelas.model.common.BillingItem;
 import com.example.hotelas.model.common.DiscountDTO;
+import com.example.hotelas.model.common.ResponseDTO;
 import com.example.hotelas.model.response.ApiResponse;
 import com.example.hotelas.model.response.reservation.InitialReservationResponse;
 import com.example.hotelas.model.response.reservation.ReservationStepResponse;
@@ -93,6 +94,12 @@ public class PaymentActivity extends AppCompatActivity {
         paymentPrefManager = new PaymentPrefManager(this);
         InitialReservationResponse savedResponse = paymentPrefManager.getPaymentInfo();
         reservationId = savedResponse.getReservationId();
+
+        if (reservationId == null) {
+            Toast.makeText(this, "Hiện tại bạn chưa có đơn đặt phòng nào !", Toast.LENGTH_SHORT).show();
+            finish();
+        }
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             expiredDateTime = savedResponse.getExpireDateTime();
         }
@@ -130,7 +137,30 @@ public class PaymentActivity extends AppCompatActivity {
         // set sự kiện cho nút tiếp tục
         binding.payButton.setOnClickListener(v -> onClickNextStep());
 
+        // set sự kiện cho nút tiếp tục
+        binding.cancelButton.setOnClickListener(v -> cancelReservation());
+
         getReservationInfo();
+    }
+
+    // hủy đặt phòng
+    private void cancelReservation () {
+        String token = new PrefManager(this).getAuthResponse().getAccessToken();
+        reservationService = new ReservationService(token);
+
+        reservationService.cancelReservation(reservationId, new ServiceExecutor.CallBack<ResponseDTO>() {
+            @Override
+            public void onSuccess(ApiResponse<ResponseDTO> result) {
+                paymentPrefManager.clearPaymentInfo();
+                Toast.makeText(PaymentActivity.this, result.getMessage(), Toast.LENGTH_SHORT).show();
+                finish();
+            }
+
+            @Override
+            public void onFailure(String errorMessage) {
+                Toast.makeText(PaymentActivity.this, errorMessage, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     public void getReservationInfo() {
@@ -161,6 +191,17 @@ public class PaymentActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void setReservationData() {
+
+        if (reservationStepResponse.getCurrentStep() >= 2) {
+            binding.fixedPriceLayout.animate()
+                    .alpha(0f)
+                    .translationY(binding.fixedPriceLayout.getHeight())
+                    .setDuration(300)
+                    .withEndAction(() -> binding.fixedPriceLayout.setVisibility(View.GONE))
+                    .start();
+
+            binding.nestedScrollView.setPadding(0, 0, 0, 0);
+        }
 
         // set total
         binding.totalPriceTextView.setText(reservationStepResponse.getTotalPrice().toString() + "VND");

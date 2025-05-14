@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -49,8 +50,8 @@ public class SearchFragment extends Fragment implements GuestPickerDialog.GuestP
     private List<Images> imagesList;
     private String checkInDate;
     private String checkOutDate;
-    private int adultsCount = 0;
-    private int roomCount = 0;
+    private int adultsCount = 1;
+    private int roomCount = 1;
     private int checkInDay = 0;
     private int checkInMonth = 0;
     private int checkInYear = 0;
@@ -103,6 +104,12 @@ public class SearchFragment extends Fragment implements GuestPickerDialog.GuestP
         });
 
         searchButton.setOnClickListener(v -> {
+
+            if (checkInDate == null || checkOutDate == null) {
+                Toast.makeText(requireContext(), "Vui lòng chọn ngày checkIn và checkOut", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             String location = locationButton.getText().toString();
             Intent intent = new Intent(requireContext(), SearchResultActivity.class);
             intent.putExtra("location", location);
@@ -321,7 +328,7 @@ public class SearchFragment extends Fragment implements GuestPickerDialog.GuestP
     }
 
     private void updateGuestPickerButtonText() {
-        String guestText = adultsCount + " Adults, " + roomCount + " Rooms";
+        String guestText = adultsCount + " Khách, " + roomCount + " Phòng";
         guestpickerButton.setText(guestText);
     }
 

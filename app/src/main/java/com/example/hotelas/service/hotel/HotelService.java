@@ -35,11 +35,12 @@ public class HotelService {
             Long numAdults,
             Long numRooms,
             int page,
+            String location,
             CallBack callback
     ) {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         Call<ApiResponse<PagingResponse<HotelResultResponse>>> call = apiService.searchHotels(
-                formatter.format(checkIn), formatter.format(checkOut), numAdults, numRooms, page, 5
+                formatter.format(checkIn), formatter.format(checkOut), numAdults, numRooms, page, 5, location
         );
 
         call.enqueue(new Callback<ApiResponse<PagingResponse<HotelResultResponse>>>() {
@@ -48,14 +49,14 @@ public class HotelService {
                 if (response.isSuccessful() && response.body() != null) {
                     callback.onSuccess(response.body()); // trả về list khách sạn
                 } else {
-//                    try {
-//                        String errorBody = response.errorBody().string();
-//                        Gson gson = new Gson();
-//                        ApiResponse errorResponse = gson.fromJson(errorBody, ApiResponse.class);
-//                        callback.onFailure(errorResponse.getMessage());
-//                    } catch (Exception e) {
-//                        callback.onFailure("Không đọc được lỗi từ server");
-//                    }
+                    try {
+                        String errorBody = response.errorBody().string();
+                        Gson gson = new Gson();
+                        ApiResponse errorResponse = gson.fromJson(errorBody, ApiResponse.class);
+                        callback.onFailure(errorResponse.getMessage());
+                    } catch (Exception e) {
+                        callback.onFailure("Không đọc được lỗi từ server");
+                    }
                 }
             }
 

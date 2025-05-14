@@ -1,26 +1,28 @@
 package com.example.hotelas;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
+import android.widget.TextView;
 
-import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 
+import com.example.hotelas.config.PaymentPrefManager;
 import com.example.hotelas.config.PrefManager;
 import com.example.hotelas.databinding.ActivityMainBinding;
 import com.example.hotelas.model.response.AuthenticationResponse;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.snackbar.Snackbar;
 
 public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;
     private PrefManager prefManager;
+    private PaymentPrefManager paymentPrefManager;
 
 
     @Override
@@ -40,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         replaceFragment(searchFragment);
 
         prefManager = new PrefManager(this);
+        paymentPrefManager = new PaymentPrefManager(this);
 
         // Nếu đã đăng nhập thì show BottomNav và gán listener
         if (prefManager.isLoggedIn()) {
@@ -50,7 +53,8 @@ public class MainActivity extends AppCompatActivity {
                 } else if (item.getItemId() == R.id.search) {
                     replaceFragment(new SearchFragment());
                 } else if (item.getItemId() == R.id.reservations) {
-                    // replaceFragment(new ReservationsFragment());
+                    Intent intent = new Intent(this, ReservationHistoryActivity.class);
+                    startActivity(intent);
                 }
                 return true;
             });
@@ -60,6 +64,9 @@ public class MainActivity extends AppCompatActivity {
         }
 
         updateToolbarGreeting();
+
+        // phát cảnh bao payment nếu có đơn đặt phòng chưa hoàn thành
+        showPaymentAlert();
     }
 
     private void updateToolbarGreeting() {
@@ -83,5 +90,32 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.frameLayout, fragment)
                 .commit();
+    }
+
+    private void showPaymentAlert () {
+        if (!paymentPrefManager.isPaymentExpired()) {
+            MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this);  // nếu ở Fragment thì dùng getContext()
+
+            builder.setTitle("🔔 Một đơn đặt phòng chưa hoàn tất")
+                    .setMessage("Bạn còn một đơn đặt phòng chưa thanh toán. Bạn có muốn tiếp tục ngay không?")
+                    .setCancelable(false)  // Không thể tắt bằng nút back hoặc bấm ngoài
+                    .setPositiveButton("Thanh toán ngay", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Chuyển sang PaymentActivity
+                            Intent intent = new Intent(getApplicationContext(), PaymentActivity.class);
+                            startActivity(intent);
+                        }
+                    })
+                    .setNegativeButton("Để sau", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();  // Đóng dialog
+                        }
+                    });
+
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        }
     }
 }

@@ -136,7 +136,22 @@
                         android:id="@+id/checkbox_policy"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:buttonTint="@color/black"
                         android:text="Đồng ý với chính sách" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/payAtHotelBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/white"
+                        android:text="Thanh toán khi nhận phòng"
+                        android:textColor="@color/black"
+                        android:textSize="10sp"
+                        app:icon="@drawable/payment"
+                        app:iconGravity="textStart"
+                        app:iconPadding="8dp"
+                        app:iconSize="24dp"
+                        app:iconTint="@null" />
                 </LinearLayout>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>

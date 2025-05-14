@@ -2,6 +2,7 @@ package com.example.hotelas.service.reservation;
 
 import com.example.hotelas.config.RetrofitClient;
 import com.example.hotelas.model.common.DiscountDTO;
+import com.example.hotelas.model.common.ResponseDTO;
 import com.example.hotelas.model.request.reservation.initial.InitialReservationRequest;
 import com.example.hotelas.model.request.reservation.updateinfo.UpdateReservationInfoRequest;
 import com.example.hotelas.model.response.ApiResponse;
@@ -64,5 +65,22 @@ public class ReservationService {
     ) {
         Call<ApiResponse<List<ReservationHistoryResponse>>> call = apiService.getReservationHistory();
         ServiceExecutor.enqueue(call, callback);
+    }
+
+
+    public void getReservationCompletedCount (
+            ServiceExecutor.CallBack<Long> callback
+    ) {
+        Call<ApiResponse<Long>> call = apiService.getReservationCompletedCount();
+        ServiceExecutor.enqueue(call, callback);
+    }
+
+
+    public void cancelReservation (
+            String reservationId,
+            ServiceExecutor.CallBack<ResponseDTO> callBack
+    ) {
+        Call<ApiResponse<ResponseDTO>> call = apiService.cancelReservation(reservationId);
+        ServiceExecutor.enqueue(call, callBack);
     }
 }

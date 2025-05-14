@@ -70,6 +70,10 @@
                     android:host="reservation"
                     android:pathPrefix="/success" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".StartActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -24,7 +24,8 @@ public interface HotelAPIService {
             @Query("numAdults") Long numAdults,
             @Query("numRooms") Long numRooms,
             @Query("page") int page,
-            @Query("size") int size
+            @Query("size") int size,
+            @Query("location") String location
     );
 
     @GET("hotel/detail/{hotelId}")

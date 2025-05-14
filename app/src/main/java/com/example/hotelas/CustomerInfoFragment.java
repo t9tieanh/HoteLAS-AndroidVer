@@ -18,11 +18,14 @@ import com.example.hotelas.config.PrefManager;
 import com.example.hotelas.databinding.FragmentCustomerInfoBinding;
 import com.example.hotelas.model.common.DiscountDTO;
 import com.example.hotelas.model.common.DiscountDTOForDiscountActivity;
+import com.example.hotelas.model.request.reservation.initial.ApplyDiscountRequest;
 import com.example.hotelas.model.request.reservation.updateinfo.UpdateReservationInfoRequest;
 import com.example.hotelas.model.response.ApiResponse;
 import com.example.hotelas.model.response.CreationResponse;
 import com.example.hotelas.model.response.CustomerResponseDTO;
+import com.example.hotelas.model.response.reservation.ApplyDiscountResponse;
 import com.example.hotelas.service.callback.ServiceExecutor;
+import com.example.hotelas.service.promotion.PromotionService;
 import com.example.hotelas.service.reservation.ReservationService;
 import com.example.hotelas.service.user.UserService;
 
@@ -34,6 +37,7 @@ public class CustomerInfoFragment extends Fragment implements PaymentActivity.On
     private FragmentCustomerInfoBinding binding;
     private UserService userService;
     private ReservationService reservationService;
+    private PromotionService promotionService;
     private CustomerResponseDTO customerInfo;
 
     private PrefManager prefManager;
@@ -56,6 +60,7 @@ public class CustomerInfoFragment extends Fragment implements PaymentActivity.On
 
         reservationService = new ReservationService(prefManager.getAuthResponse().getAccessToken());
         userService = new UserService(prefManager.getAuthResponse().getAccessToken());
+        promotionService = new PromotionService(prefManager.getAuthResponse().getAccessToken());
 
 
         // lấy dữ liêệu người dùng va ma giam gia
@@ -77,6 +82,9 @@ public class CustomerInfoFragment extends Fragment implements PaymentActivity.On
                 startActivity(intent);
             }
         });
+
+        // set up button apply private discount
+        binding.findSpecialDiscountBtn.setOnClickListener(v -> {applyPrivateDiscount();});
 
         return view;
     }
@@ -156,6 +164,31 @@ public class CustomerInfoFragment extends Fragment implements PaymentActivity.On
         }
 
         return true;
+    }
+
+    private void applyPrivateDiscount() {
+        if (binding.discountCodeInput.getText().toString().trim().isEmpty()) {
+            Toast.makeText(requireContext(), "Vui lòng nhập mã code của voucher",Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        ApplyDiscountRequest request = ApplyDiscountRequest.builder()
+                .discountCodes(List.of(binding.discountCodeInput.getText().toString()))
+                .reservationId(reservationId)
+                .build();
+
+        promotionService.applyDiscounts(request, new ServiceExecutor.CallBack<ApplyDiscountResponse>() {
+            @Override
+            public void onSuccess(ApiResponse<ApplyDiscountResponse> result) {
+                Toast.makeText(requireContext(), result.getMessage(), Toast.LENGTH_SHORT).show();
+                ((PaymentActivity)requireActivity()).getReservationInfo();
+            }
+
+            @Override
+            public void onFailure(String errorMessage) {
+                Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override

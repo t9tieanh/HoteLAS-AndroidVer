@@ -33,7 +33,7 @@ public class StartActivity extends AppCompatActivity {
 
         PrefManager prefManager = new PrefManager(this);
         AuthenticationResponse user = prefManager.getAuthResponse();
-        if (user != null && user.isValid()) {
+        if (user != null && user.isValid() && user.getUsername() != null) {
             Intent intent = new Intent(StartActivity.this, MainActivity.class);
             startActivity(intent);
             finish();
