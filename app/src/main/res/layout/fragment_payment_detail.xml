@@ -136,6 +136,7 @@
                         android:id="@+id/checkbox_policy"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:buttonTint="@color/black"
                         android:text="Đồng ý với chính sách" />
 
                     <com.google.android.material.button.MaterialButton

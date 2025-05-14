@@ -69,15 +69,6 @@ public class ProfileFragment extends Fragment {
         });
 
         binding.btnLogout.setOnClickListener( v -> logout());
-
-        // nếu có đơn đặt phòng thì nhắc nhwor
-        if (!paymentPrefManager.isPaymentExpired()) {
-            binding.cardPendingBooking.setVisibility(View.VISIBLE);
-            binding.btnContinueBooking.setOnClickListener(v -> {
-                Intent intent = new Intent(requireContext(), PaymentActivity.class);
-                startActivity(intent);
-            });
-        }
     }
 
     private void getUserProfile() {
@@ -105,6 +96,15 @@ public class ProfileFragment extends Fragment {
                 Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show();
             }
         });
+
+        // nếu có đơn đặt phòng thì nhắc nhwor
+        if (!paymentPrefManager.isPaymentExpired()) {
+            binding.cardPendingBooking.setVisibility(View.VISIBLE);
+            binding.btnContinueBooking.setOnClickListener(v -> {
+                Intent intent = new Intent(requireContext(), PaymentActivity.class);
+                startActivity(intent);
+            });
+        }
     }
 
     private void setUserInfo(CustomerResponseDTO customer) {
@@ -157,4 +157,11 @@ public class ProfileFragment extends Fragment {
         // Giải phóng binding
         binding = null;
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getUserProfile();
+    }
+
 }

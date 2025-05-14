@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -103,6 +104,12 @@ public class SearchFragment extends Fragment implements GuestPickerDialog.GuestP
         });
 
         searchButton.setOnClickListener(v -> {
+
+            if (checkInDate == null || checkOutDate == null) {
+                Toast.makeText(requireContext(), "Vui lòng chọn ngày checkIn và checkOut", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             String location = locationButton.getText().toString();
             Intent intent = new Intent(requireContext(), SearchResultActivity.class);
             intent.putExtra("location", location);

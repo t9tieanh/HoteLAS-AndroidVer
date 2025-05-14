@@ -144,6 +144,9 @@ public class EditProfileActivity extends AppCompatActivity {
 
                 // update pref
                 prefManager.updateAuthField(PrefManager.AuthField.EMAIL, result.getResult().getEmail());
+
+                //
+                finish();
             }
 
             @Override
