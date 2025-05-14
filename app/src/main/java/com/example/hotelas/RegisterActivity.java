@@ -42,6 +42,12 @@ public class RegisterActivity extends AppCompatActivity {
 
         receiveIntentData();
         setupListeners();
+
+        // TextView "Login"
+        binding.tvLoginNow.setOnClickListener(v -> {
+            Intent intent = new Intent(this, StartActivity.class); // Đảm bảo bạn có LoginActivity
+            startActivity(intent);
+        });
     }
 
     private void setupListeners() {

@@ -40,7 +40,7 @@ public class StartActivity extends AppCompatActivity {
         }
 
         binding.loginGmail.setOnClickListener(v -> {
-            Intent intent = new Intent(StartActivity.this, LoginEmailActivity.class);
+            Intent intent = new Intent(StartActivity.this, LoginActivity.class);
             startActivity(intent);
         });
 
@@ -56,9 +56,6 @@ public class StartActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         });
-
-        // Gọi hàm setup chữ Hotelas màu
-//        setUpHotelasTitle();
     }
 
 
@@ -131,25 +128,5 @@ public class StartActivity extends AppCompatActivity {
                 }
             });
         }
-    }
-
-    private void setUpHotelasTitle() {
-        // Tạo nội dung "Hotelas"
-        SpannableString spannableString = new SpannableString("Hotelas");
-
-        // Set màu chữ "H" (0 -> 1)
-        spannableString.setSpan(
-                new ForegroundColorSpan(ContextCompat.getColor(this, R.color.red)),
-                0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-        );
-
-        // Set màu chữ "otelas" (1 -> 7)
-        spannableString.setSpan(
-                new ForegroundColorSpan(ContextCompat.getColor(this, R.color.md_theme_primary)),
-                1, 7, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-        );
-
-        // Gán vào TextView bằng binding
-        binding.textTitle.setText(spannableString);
     }
 }
