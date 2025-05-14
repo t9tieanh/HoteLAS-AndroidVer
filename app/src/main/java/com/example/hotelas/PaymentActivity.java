@@ -58,7 +58,7 @@ public class PaymentActivity extends AppCompatActivity {
     private PaymentPagerAdapter pagerAdapter;
     private PaymentPrefManager paymentPrefManager;
 
-    private ReservationStepResponse reservationStepResponse;
+    public ReservationStepResponse reservationStepResponse;
     private ReservationService reservationService;
 
     private BillingAdapter billingAdapter;
@@ -133,7 +133,7 @@ public class PaymentActivity extends AppCompatActivity {
         getReservationInfo();
     }
 
-    private void getReservationInfo() {
+    public void getReservationInfo() {
         String token = new PrefManager(this).getAuthResponse().getAccessToken();
         reservationService = new ReservationService(token);
 
@@ -160,7 +160,10 @@ public class PaymentActivity extends AppCompatActivity {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private void setReservationData() {
+    public void setReservationData() {
+
+        // set total
+        binding.totalPriceTextView.setText(reservationStepResponse.getTotalPrice().toString() + "VND");
 
         // hiển thị fragment hiên tại (tương ứng với step)
         nextStep(reservationStepResponse.getCurrentStep());
@@ -271,8 +274,6 @@ public class PaymentActivity extends AppCompatActivity {
     public void nextStep (int step) {
         binding.viewPager.setCurrentItem(step, true);
     }
-
-
 
     // các fragment được dùng trong payment activity đều phải implement interface này
 

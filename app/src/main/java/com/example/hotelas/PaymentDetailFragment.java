@@ -17,10 +17,10 @@ import androidx.fragment.app.Fragment;
 import com.example.hotelas.config.PrefManager;
 import com.example.hotelas.databinding.FragmentPaymentDetailBinding;
 import com.example.hotelas.model.common.PaymentDTO;
-import com.example.hotelas.model.response.ApiResponse;
-import com.example.hotelas.service.callback.ServiceExecutor;
 import com.example.hotelas.service.payment.PaymentService;
 
+import com.example.hotelas.model.response.ApiResponse;
+import com.example.hotelas.service.callback.ServiceExecutor;
 public class PaymentDetailFragment extends Fragment {
     private FragmentPaymentDetailBinding binding;
     private PaymentService paymentService;
