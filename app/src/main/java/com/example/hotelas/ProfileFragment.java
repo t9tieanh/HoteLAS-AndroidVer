@@ -8,23 +8,29 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+import com.example.hotelas.config.PaymentPrefManager;
 import com.example.hotelas.config.PrefManager;
 import com.example.hotelas.constant.FileContant;
 import com.example.hotelas.databinding.FragmentProfileBinding;
 import com.example.hotelas.model.response.ApiResponse;
 import com.example.hotelas.model.response.CustomerResponseDTO;
 import com.example.hotelas.service.callback.ServiceExecutor;
+import com.example.hotelas.service.reservation.ReservationService;
 import com.example.hotelas.service.user.UserService;
 
 
 public class ProfileFragment extends Fragment {
     private FragmentProfileBinding binding;
     private UserService userService;
+
+    private ReservationService reservationService;
     private CustomerResponseDTO user;
+
+    private PrefManager prefManager;
+    private PaymentPrefManager paymentPrefManager;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -40,10 +46,13 @@ public class ProfileFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         // Khởi tạo UserService với token
-        String token = new PrefManager(requireContext())
-                .getAuthResponse()
-                .getAccessToken();
+        prefManager = new PrefManager(requireContext());
+        paymentPrefManager = new PaymentPrefManager(requireContext());
+
+
+        String token = prefManager.getAuthResponse().getAccessToken();
         userService = new UserService(token);
+        reservationService = new ReservationService(token);
 
         // Gọi API để lấy profile
         getUserProfile();
@@ -60,6 +69,15 @@ public class ProfileFragment extends Fragment {
         });
 
         binding.btnLogout.setOnClickListener( v -> logout());
+
+        // nếu có đơn đặt phòng thì nhắc nhwor
+        if (!paymentPrefManager.isPaymentExpired()) {
+            binding.cardPendingBooking.setVisibility(View.VISIBLE);
+            binding.btnContinueBooking.setOnClickListener(v -> {
+                Intent intent = new Intent(requireContext(), PaymentActivity.class);
+                startActivity(intent);
+            });
+        }
     }
 
     private void getUserProfile() {
@@ -71,10 +89,20 @@ public class ProfileFragment extends Fragment {
             }
             @Override
             public void onFailure(String errorMessage) {
-                Toast.makeText(requireContext(),
-                                errorMessage,
-                                Toast.LENGTH_SHORT)
-                        .show();
+                Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // lấy số đạt phòng
+        reservationService.getReservationCompletedCount(new ServiceExecutor.CallBack<Long>() {
+            @Override
+            public void onSuccess(ApiResponse<Long> result) {
+                binding.tvReservationCompleted.setText(result.getResult().toString());
+            }
+
+            @Override
+            public void onFailure(String errorMessage) {
+                Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -93,7 +121,6 @@ public class ProfileFragment extends Fragment {
 
         binding.tvLoyaltyPoints.setText(
                 String.valueOf(customer.getLoyaltyPoints()));
-        binding.tvJobsCompleted.setText("37");  // hoặc giá trị thực từ API
 
         Glide.with(this)
                 .load(FileContant.FILE_API_URL + customer.getImgUrl())
@@ -104,8 +131,8 @@ public class ProfileFragment extends Fragment {
 
 
     private void logout () {
-        PrefManager prefManager = new PrefManager(requireContext());
         prefManager.clearAuthResponse();
+        paymentPrefManager.clearPaymentInfo();
 
         // transfer activity
         Intent intent = new Intent(requireContext(), StartActivity.class);

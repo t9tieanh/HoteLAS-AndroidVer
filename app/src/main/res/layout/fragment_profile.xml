@@ -176,6 +176,7 @@
                 <!-- Ngăn cách Jobs Done -->
 
 
+
                 <!-- Phần thống kê đặt phòng -->
 
                 <LinearLayout
@@ -188,8 +189,7 @@
                     android:orientation="vertical"
                     app:layout_constraintBottom_toTopOf="@+id/cardBookingStats"
                     app:layout_constraintTop_toBottomOf="@+id/btnSaveChange"
-                    app:layout_constraintVertical_bias="0.277"
-                    tools:layout_editor_absoluteX="0dp">
+                    tools:layout_editor_absoluteX="16dp">
 
                     <!-- Tiêu đề -->
                     <TextView
@@ -260,7 +260,7 @@
                                 android:orientation="vertical">
 
                                 <TextView
-                                    android:id="@+id/tvJobsCompleted"
+                                    android:id="@+id/tvReservationCompleted"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="37"
@@ -293,6 +293,59 @@
                             android:textColor="@color/white"
                             app:cornerRadius="16dp" />
 
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardPendingBooking"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:visibility="gone"
+                    app:cardBackgroundColor="@color/md_theme_background"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="4dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cardBookingStats">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#E9BECF"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <TextView
+                            android:id="@+id/tvPendingBookingTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Bạn đang có một đơn đặt phòng chưa hoàn thành"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvPendingBookingDesc"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="Bạn có muốn tiếp tục hoàn tất đơn này không?"
+                            android:textColor="@color/white"
+                            android:textSize="14sp" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnContinueBooking"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_marginTop="12dp"
+                            android:backgroundTint="@color/red"
+                            android:text="Tiếp tục"
+                            android:textAllCaps="false"
+                            android:textColor="@android:color/white"
+                            app:cornerRadius="12dp" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 

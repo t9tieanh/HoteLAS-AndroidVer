@@ -19,7 +19,7 @@ import com.google.android.material.button.MaterialButton;
 public class GuestPickerDialog extends BottomSheetDialogFragment {
 
     private int adultsCount = 1;
-    private int childsCount = 0;
+    private int childsCount = 1;
     private GuestPickerListener listener;
 
     @NonNull
@@ -74,14 +74,14 @@ public class GuestPickerDialog extends BottomSheetDialogFragment {
         });
 
         childsMinusButton.setOnClickListener(v -> {
-            if (childsCount > 0) {
+            if (childsCount > 1) {
                 childsCount--;
                 childsCountText.setText(String.valueOf(childsCount));
             }
         });
 
         childsPlusButton.setOnClickListener(v -> {
-            if (childsCount < 2) {
+            if (childsCount < 3) {
                 childsCount++;
                 childsCountText.setText(String.valueOf(childsCount));
             }

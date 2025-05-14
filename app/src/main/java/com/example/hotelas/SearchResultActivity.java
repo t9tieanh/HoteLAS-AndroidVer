@@ -38,11 +38,12 @@ public class SearchResultActivity extends AppCompatActivity {
     int checkOutMonth;
     int checkOutYear;
 
+    String location;
+
     Date checkInDate = null;
     Date checkOutDate = null;
 
     private List<HotelResultResponse> hotelList = new ArrayList<>();
-    private RecyclerView hotelRecyclerView;
     private SearchHotelResultAdapter hotelAdapter;
 
 
@@ -56,7 +57,8 @@ public class SearchResultActivity extends AppCompatActivity {
         View decorView = getWindow().getDecorView();
         decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
 
-        String location = getIntent().getStringExtra("location");
+        location = getIntent().getStringExtra("location");
+
         numOfAdults = getIntent().getIntExtra("adultsCount", 1);
         roomCount = getIntent().getIntExtra("roomCount", 1);
         checkInDay = getIntent().getIntExtra("checkInDay", 0);
@@ -93,7 +95,7 @@ public class SearchResultActivity extends AppCompatActivity {
         HotelService hotelService = new HotelService();
         binding.progressBar.setVisibility(View.VISIBLE);
 
-        hotelService.getListHotel(checkInDate,checkOutDate,(long)numOfAdults,(long)roomCount, 0 ,new HotelService.CallBack<PagingResponse<HotelResultResponse>>() {
+        hotelService.getListHotel(checkInDate,checkOutDate,(long)numOfAdults,(long)roomCount, 0 ,location ,new HotelService.CallBack<PagingResponse<HotelResultResponse>>() {
             @Override
             public void onSuccess(ApiResponse<PagingResponse<HotelResultResponse>> result) {
                 binding.progressBar.setVisibility(View.GONE);

@@ -32,7 +32,7 @@ public class DiscountActivity extends AppCompatActivity {
     private ActivityVoucherBoxBinding binding;
     private DiscountAdapter adapter;
     private PrefManager prefManager;
-    private String reservationId = "f9b5905e-10ba-4072-8568-bca3f940f542";
+    private String reservationId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +78,7 @@ public class DiscountActivity extends AppCompatActivity {
                 discounts = result.getResult();
                 adapter = new DiscountAdapter(DiscountActivity.this, discounts);
                 binding.voucherRecyclerView.setAdapter(adapter);
+                binding.tvVoucherDescription.setText("Có thể chọn "+ discounts.size() +" Voucher");
 
                 // đánh dấu lại những discount đã được apply
                 markSelectedDiscount();
@@ -100,6 +101,7 @@ public class DiscountActivity extends AppCompatActivity {
             @Override
             public void onSuccess(ApiResponse<ApplyDiscountResponse> result) {
                 Toast.makeText(DiscountActivity.this, result.getMessage(), Toast.LENGTH_SHORT).show();
+                finish();
             }
 
             @Override

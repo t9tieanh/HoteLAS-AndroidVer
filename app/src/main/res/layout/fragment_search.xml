@@ -71,7 +71,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="55dp"
                         android:drawableLeft="@drawable/location_ic"
-                        android:text="Chọn địa điểm"
+                        android:text="Tất cả"
                         android:textAlignment="textStart"
                         android:textAllCaps="false"
                         android:textColor="#000000"
